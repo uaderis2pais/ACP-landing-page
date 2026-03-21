@@ -162,7 +162,7 @@ export function CartDrawer() {
           {blocked && (
             <div className="flex items-center gap-2 text-red-400 text-xs mb-4 bg-red-500/10 border border-red-500/20 rounded-sm px-3 py-2">
               <ShieldAlert className="w-4 h-4 flex-shrink-0" />
-              <span>Acción bloqueada. Por favor, revisá tu carrito e intentá de nuevo.</span>
+              <span>Acción bloqueada. Por favor esperá un momento, revisá tu carrito e intentá de nuevo.</span>
             </div>
           )}
           <div className="flex justify-between items-end mb-6">
