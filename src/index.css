@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-sushi-black text-sushi-white font-sans antialiased overflow-x-hidden;
+  }
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ─── Animation utilities ────────────────────────────────────────── */
+@layer utilities {
+
+  /* Legacy class kept for backward compat */
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out both;
+  }
+
+  /* --- Visible-state classes (toggled by JS / useInView hook) --- */
+  .anim-fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .anim-fade-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .anim-fade-down {
+    opacity: 0;
+    transform: translateY(-24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .anim-fade-down.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .anim-fade-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .anim-fade-left.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .anim-fade-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .anim-fade-right.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .anim-scale-in {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .anim-scale-in.in-view {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Staggered children — add delay via style prop */
+  .anim-stagger > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .anim-stagger.in-view > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0ms;   }
+  .anim-stagger.in-view > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 100ms; }
+  .anim-stagger.in-view > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 200ms; }
+  .anim-stagger.in-view > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 300ms; }
+  .anim-stagger.in-view > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 400ms; }
+  .anim-stagger.in-view > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 500ms; }
+
+  /* Shimmer skeleton */
+  .skeleton {
+    background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+}

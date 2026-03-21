@@ -1,0 +1,31 @@
+export const menuData = [
+  { id: 'm1',  name: 'Crunch x 4u',            tag: 'popular', description: 'Roll súper crocante relleno de salmón.',         price: 7000,  image: '/images/Crunch.webp' },
+  { id: 'm2',  name: 'Roll verano x 4u',        tag: 'popular', description: 'Salmón natural marinado en lima.',               price: 8200,  image: '/images/RollDeVerano.webp' },
+  { id: 'm3',  name: 'Delicious x 4u',                          description: 'Salmón cocido, miel y garrapiñada.',             price: 7000,  image: '/images/Delicius.webp' },
+  { id: 'm4',  name: 'Mango roll x 4u',         tag: 'popular', description: 'Salmón natural, queso y mango.',                 price: 7000,  image: '/images/MangoRoll.webp' },
+  { id: 'm5',  name: 'Geishas x 5 unidades',    tag: 'popular', description: 'Opciones: rellenas de palta, mango.',            price: 13500, image: '/images/Geisha.webp' },
+  { id: 'm6',  name: 'Hot veggie x 4u',                         description: 'Cheddar palta y Philadelphia. Rebozado.',        price: 7000,  image: '/images/HotVeggie.webp' },
+  { id: 'm7',  name: 'Limado x 4u',                             description: 'Salmón cocido con limón y queso.',               price: 7000,  image: '/images/Limado.webp' },
+  { id: 'm8',  name: 'Hot langostinos x 4u',    tag: 'nuevo',   description: 'Langostinos, palta y Philadelphia, rebozado.',   price: 7000,  image: '/images/HotLangostinos.webp' },
+  { id: 'm9',  name: 'Tropical roll x 4u',                      description: 'Salmón natural y queso Philadelphia.',           price: 7000,  image: '/images/TropicalRoll.webp' },
+  { id: 'm10', name: 'Pink maki x 4u',          tag: 'nuevo',   description: 'Arroz rosa, remolacha, palta, queso.',           price: 7800,  image: '/images/PinkMaki.webp' },
+  { id: 'm11', name: 'Niguiri x 4u',            tag: 'nuevo',   description: 'Salmón fresco sobre bolita de arroz.',           price: 8200,  image: '/images/Nigiri.webp' },
+  { id: 'm12', name: 'Phila clásico x 4u',                      description: 'Salmón natural y queso Philadelphia.',           price: 7000,  image: '/images/PhilaClasico.webp' },
+  { id: 'm13', name: 'Dragon salmón x 4u',      tag: 'popular', description: 'Salmón natural y queso Philadelphia.',           price: 7000,  image: '/images/DragonSalmon.webp' },
+  { id: 'm14', name: 'New York phila x 4u',                     description: 'Salmón natural, palta y queso Phila.',           price: 7000,  image: '/images/NewYorkPhila.webp' },
+  { id: 'm15', name: 'New York x 4u',                           description: 'Salmón natural y palta. Sésamo.',               price: 7000,  image: '/images/NewYork.webp' },
+  { id: 'm16', name: 'Veggie Perú x 4u',                        description: 'Cheddar y palta, decorado con papas.',           price: 7000,  image: '/images/VeggiePeru.webp' },
+  { id: 'm17', name: 'Tropical veggie x 4u',                    description: 'Mango y Philadelphia. Salsa de maracuyá.',       price: 7000,  image: '/images/TropicalVeggie.webp' },
+  { id: 'm18', name: 'Luisi roll x 4u',                         description: 'Tamago, palta, salmón y queso.',                 price: 7000,  image: '/images/LuiseRoll.webp' },
+  { id: 'm19', name: 'Flake roll x 4u',                         description: 'Salmón cocido en salsa teriyaki.',               price: 7000,  image: '/images/FlakeRoll.webp' },
+  { id: 'm20', name: 'Mango roll furai x 4u',                   description: 'Langostinos rebozados en Panko.',                price: 7000,  image: '/images/MangoRollFurai.webp' },
+  { id: 'm21', name: 'Dragon roll x 4u',        tag: 'popular', description: 'Langostinos rebozados en Panko.',                price: 7000,  image: '/images/DragonRoll.webp' },
+  { id: 'm22', name: 'Bs As roll x 4u',                         description: 'Langostino natural y queso Phila.',              price: 7000,  image: '/images/BsAsRoll.webp' },
+  { id: 'm23', name: 'Philadelphia roll x 4u',  tag: 'popular', description: 'Salmón natural y palta. Decorado.',              price: 7000,  image: '/images/PhiladelphiaRoll.webp' },
+];
+
+export const reviewsData = [
+  { id: 'r1', author: 'Martín G.',  rating: 5, text: 'Muy buenas preparaciones en sushi con ingredientes frescos. El mejor de Concepción lejos.',                                      date: 'Hace 1 semana' },
+  { id: 'r2', author: 'Lucía P.',   rating: 5, text: 'El sushi es fresco, muy rico y variado. La entrega a domicilio fue súper rápida.',                                               date: 'Hace 2 semanas' },
+  { id: 'r3', author: 'Carlos R.',  rating: 2, text: 'Fuimos con muchas expectativas, pero la experiencia fue realmente decepcionante. El arroz estaba pasado.',                        date: 'Hace 1 mes' },
+];
