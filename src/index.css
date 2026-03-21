@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    @apply overflow-x-hidden w-full relative;
+  }
+
   body {
-    @apply bg-sushi-black text-sushi-white font-sans antialiased overflow-x-hidden;
+    @apply bg-sushi-black text-sushi-white font-sans antialiased scroll-smooth;
   }
 }
 

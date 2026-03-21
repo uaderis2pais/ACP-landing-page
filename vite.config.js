@@ -20,20 +20,16 @@ export default defineConfig({
         id: '/',
         icons: [
           {
-            src: 'pwa-192x192.webp',
+            src: 'pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/webp'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
-            src: 'pwa-512x512.webp',
+            src: 'pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/webp'
-          },
-          {
-            src: 'maskable-icon-512x512.webp',
-            sizes: '512x512',
-            type: 'image/webp',
-            purpose: 'maskable'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ],
         screenshots: [ // <-- Esto soluciona las advertencias de la "IU más completa"
