@@ -35,49 +35,49 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <Link to="/#hero" className="inline-block group mb-4">
-              <img src="/logoinvisible.png" alt="Agarrame como puedas" className="h-10 w-auto object-contain group-hover:scale-105 transition-transform opacity-70 group-hover:opacity-100" />
+              <img src="/logoinvisible.webp" alt="Agarrame como puedas" className="h-10 w-auto object-contain group-hover:scale-105 transition-transform opacity-70 group-hover:opacity-100" />
             </Link>
             <p className="text-gray-600 text-sm max-w-sm mt-2">
               El sushi más fresco de Concepción del Uruguay. Una experiencia gastronómica inigualable.
             </p>
           </div>
-          
+
           <div className="flex flex-wrap justify-center md:justify-end gap-x-8 gap-y-4 text-sm text-gray-400">
-            <a 
-              href="/#menu" 
+            <a
+              href="/#menu"
               onClick={(e) => handleFooterLink(e, 'menu')}
               className="hover:text-[#155E5D] transition-colors py-3 px-2 min-h-[48px] flex items-center"
             >
               Menú
             </a>
-            <a 
-             href="/#contact" 
+            <a
+              href="/#contact"
               onClick={(e) => handleFooterLink(e, 'contact')}
               className="hover:text-[#155E5D] transition-colors py-3 px-2 min-h-[48px] flex items-center"
             >
               Ubicación
             </a>
             <div className="flex gap-4">
-              <button 
-              onClick={() => openWhatsApp('https://wa.me/5491158774154')}
-              aria-label="Contactar por WhatsApp"
-              className="hover:text-green-500 transition-colors py-3 px-2 min-h-[48px] flex items-center"
-            >
-              WhatsApp
-            </button>
-            <a 
-              href="https://instagram.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="Seguinos en Instagram"
-              className="hover:text-pink-500 transition-colors py-3 px-2 min-h-[48px] flex items-center"
-            >
-              Instagram
-            </a>
+              <button
+                onClick={() => openWhatsApp('https://wa.me/5491158774154')}
+                aria-label="Contactar por WhatsApp"
+                className="hover:text-green-500 transition-colors py-3 px-2 min-h-[48px] flex items-center"
+              >
+                WhatsApp
+              </button>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Seguinos en Instagram"
+                className="hover:text-pink-500 transition-colors py-3 px-2 min-h-[48px] flex items-center"
+              >
+                Instagram
+              </a>
             </div>
           </div>
         </div>
-        
+
         <div className="mt-12 pt-8 border-t border-white/5 text-center flex flex-col items-center">
           <p className="text-gray-600 text-xs uppercase tracking-widest font-bold">
             © {new Date().getFullYear()} Agarrame como puedas. Todos los derechos reservados.
