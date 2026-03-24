@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-sushi-black text-sushi-white font-sans antialiased scroll-smooth;
+    @apply bg-sushi-black text-gray-100 font-sans antialiased scroll-smooth;
   }
 }
 

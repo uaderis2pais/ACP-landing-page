@@ -1,12 +1,15 @@
+import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
-import { Footer } from './Footer';
-import { CartDrawer } from '../common/CartDrawer';
-import { FloatingWhatsApp } from '../common/FloatingWhatsApp';
-import { FloatingCallButton } from '../common/FloatingCallButton';
 import { SEO } from '../common/SEO';
-import { InstallPWA } from '../common/InstallPWA';
 import { setHoneypot } from '../../utils/whatsappGuard';
+
+// Lazy loaded components (not needed for CLS/LCP)
+const Footer = React.lazy(() => import('./Footer').then(mod => ({ default: mod.Footer })));
+const CartDrawer = React.lazy(() => import('../common/CartDrawer').then(mod => ({ default: mod.CartDrawer })));
+const FloatingWhatsApp = React.lazy(() => import('../common/FloatingWhatsApp').then(mod => ({ default: mod.FloatingWhatsApp })));
+const FloatingCallButton = React.lazy(() => import('../common/FloatingCallButton').then(mod => ({ default: mod.FloatingCallButton })));
+const InstallPWA = React.lazy(() => import('../common/InstallPWA').then(mod => ({ default: mod.InstallPWA })));
 
 export function Layout() {
   return (
@@ -16,11 +19,13 @@ export function Layout() {
       <main className="flex-1 flex flex-col w-full">
         <Outlet />
       </main>
-      <Footer />
-      <CartDrawer />
-      <FloatingWhatsApp />
-      <FloatingCallButton />
-      <InstallPWA />
+      <Suspense fallback={null}>
+        <Footer />
+        <CartDrawer />
+        <FloatingWhatsApp />
+        <FloatingCallButton />
+        <InstallPWA />
+      </Suspense>
 
       {/* 🍯 Global Honeypot — helps prevent automated spam */}
       <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }}>

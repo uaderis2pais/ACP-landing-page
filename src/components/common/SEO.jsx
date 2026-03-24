@@ -30,9 +30,9 @@ const BUSINESS = {
   },
   openingHours: [
     // Martes a Jueves
-    { dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday'], opens: '19:30', closes: '00:00' },
+    { dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday'], opens: '20:00', closes: '00:30' },
     // Viernes a Domingo
-    { dayOfWeek: ['Friday', 'Saturday', 'Sunday'], opens: '19:30', closes: '01:00' },
+    { dayOfWeek: ['Friday', 'Saturday', 'Sunday'], opens: '20:00', closes: '00:30' },
     // Lunes: cerrado (omitido intencionalmente — ausencia = cerrado)
   ],
   sameAs: [
@@ -163,7 +163,7 @@ function buildJsonLd() {
 const META = {
   title: 'Agarrame Como Puedas | Sushi en Concepción del Uruguay',
   description:
-    'El mejor sushi de Concepción del Uruguay. Rolls artesanales, geishas, combos y delivery. Pedí por WhatsApp. Abrimos Mar–Dom desde las 19:30.',
+    'El mejor sushi de Concepción del Uruguay. Rolls artesanales, geishas, combos y delivery. Pedí por WhatsApp. Abrimos Mar–Dom desde las 20:00.',
   ogImage: 'https://agarramecomopuedas.com.ar/logoinvisible.png',
   canonical: 'https://agarramecomopuedas.com.ar',
   keywords:

@@ -10,11 +10,11 @@ const FAQ_DATA = [
   },
   {
     q: '¿A qué hora abren?',
-    a: 'Abrimos de martes a domingo a partir de las 19:30. Los lunes estamos cerrados para descansar y preparar los mejores ingredientes del día siguiente.',
+    a: 'Abrimos de martes a domingo a partir de las 20:00. Los lunes estamos cerrados para descansar y preparar los mejores ingredientes del día siguiente.',
   },
   {
     q: '¿Hasta qué hora atienden los pedidos?',
-    a: 'De martes a jueves atendemos hasta las 00:00. Los viernes, sábados y domingos, hasta la 01:00.',
+    a: 'Atendemos de martes a domingo desde las 20:00 hasta las 00:30.',
   },
   {
     q: '¿Cómo se hace un pedido?',
@@ -39,17 +39,17 @@ function FAQItem({ question, answer, index }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-white/10 rounded-sm overflow-hidden">
+    <div className="bg-sushi-darkGray border border-white/10 rounded-2xl shadow-xl overflow-hidden">
       <button
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
-        className="w-full flex justify-between items-center px-6 py-5 text-left bg-white/5 hover:bg-white/10 transition-colors group"
+        className="w-full flex justify-between items-center px-6 py-5 text-left hover:bg-white/5 transition-colors group rounded-2xl"
       >
-        <span className="font-medium text-white text-sm md:text-base pr-4 group-hover:text-sushi-gold transition-colors">
+        <span className="font-bold text-white tracking-tight text-sm md:text-base pr-4 group-hover:text-emerald-400 transition-colors">
           {question}
         </span>
         <ChevronDown
-          className={`w-5 h-5 text-sushi-gold flex-shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 text-emerald-400 flex-shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
         />
       </button>
 
@@ -57,7 +57,7 @@ function FAQItem({ question, answer, index }) {
       <div
         className={`overflow-hidden transition-[max-height,opacity] duration-400 ease-in-out ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
       >
-        <p className="px-6 py-5 text-gray-400 text-sm leading-relaxed border-t border-white/10 bg-black/20">
+        <p className="px-6 py-5 text-gray-400 text-sm leading-relaxed border-t border-white/10 bg-black/30 rounded-b-2xl">
           {answer}
         </p>
       </div>
@@ -71,7 +71,7 @@ export function FAQ() {
   const [listRef, listVisible] = useInView({ threshold: 0.05 });
 
   return (
-    <section id="faq" className="py-24 bg-sushi-darkGray border-t border-white/5">
+    <section id="faq" className="py-24 bg-sushi-black border-t border-white/10">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -79,13 +79,13 @@ export function FAQ() {
           ref={headerRef}
           className={`text-center mb-14 anim-fade-up ${headerVisible ? 'in-view' : ''}`}
         >
-          <span className="text-sushi-gold text-sm tracking-[0.2em] uppercase font-medium">
+          <span className="text-emerald-400 text-sm tracking-[0.3em] font-bold uppercase">
             Preguntas Frecuentes
           </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mt-2">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mt-3 text-white drop-shadow-sm">
             Todo lo que necesitás saber
           </h2>
-          <p className="text-gray-400 mt-4 text-sm">
+          <p className="text-gray-400 mt-4 text-sm leading-relaxed font-light">
             ¿No encontrás tu pregunta? Escribinos por WhatsApp, te respondemos al toque.
           </p>
         </div>

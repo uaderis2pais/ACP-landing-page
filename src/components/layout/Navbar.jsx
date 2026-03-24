@@ -62,14 +62,14 @@ export function Navbar() {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-          ? 'bg-sushi-black/95 backdrop-blur-md border-b border-white/10 shadow-lg py-4'
-          : 'bg-transparent py-6'
+        ? 'bg-sushi-black/95 backdrop-blur-md border-b border-white/10 shadow-lg py-4'
+        : 'bg-transparent py-6'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <a href="/#hero" className="flex items-center group">
-            <img src="/logoinvisible.png" alt="Agarrame como puedas Logo" className="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
+            <img src="/logoinvisible.webp" alt="Agarrame como puedas Logo" className="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
           </a>
 
           <div className="hidden md:flex items-center space-x-8">
@@ -78,7 +78,7 @@ export function Navbar() {
                 key={link.name}
                 href={link.path}
                 onClick={(e) => handleNavClick(e, link.path)}
-                className="text-sm font-medium transition-colors hover:text-sushi-gold text-gray-300"
+                className="text-sm font-bold tracking-tight transition-colors hover:text-emerald-400 hover:-translate-y-0.5 text-gray-300 inline-block transform duration-200"
               >
                 {link.name}
               </a>
@@ -87,11 +87,11 @@ export function Navbar() {
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label="Ver carrito de compras"
-              className="relative p-2 text-gray-300 hover:text-sushi-gold transition-colors group"
+              className="relative min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-emerald-400 transition-all duration-200 hover:-translate-y-1 group"
             >
               <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
               {getCartCount() > 0 && (
-                <span className="absolute top-0 right-0 bg-sushi-red text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-in zoom-in">
+                <span className="absolute top-0 right-0 bg-[#155E5D] shadow-md text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-in zoom-in">
                   {getCartCount()}
                 </span>
               )}
@@ -102,11 +102,11 @@ export function Navbar() {
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label="Ver carrito"
-              className="relative p-2 text-sushi-white"
+              className="relative min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-emerald-400 transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
               {getCartCount() > 0 && (
-                <span className="absolute top-0 right-0 bg-sushi-red text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                <span className="absolute top-0 right-0 bg-[#155E5D] shadow-md text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                   {getCartCount()}
                 </span>
               )}
@@ -114,7 +114,7 @@ export function Navbar() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
-              className="p-2 text-sushi-white"
+              className="min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-emerald-400 transition-colors"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -133,7 +133,7 @@ export function Navbar() {
               key={link.name}
               href={link.path}
               onClick={(e) => handleNavClick(e, link.path)}
-              className="block px-4 py-3 text-lg font-medium rounded-sm border border-transparent text-gray-300 hover:bg-white/5 hover:text-white"
+              className="block px-4 py-3 text-lg font-bold tracking-tight rounded-xl border border-transparent text-gray-300 hover:bg-white/5 hover:text-white transition-colors duration-200"
             >
               {link.name}
             </a>

@@ -3,7 +3,7 @@ import { X, Utensils } from 'lucide-react';
 import { menuData } from '../../data/data';
 
 /**
- * HungerBanner — Shows between 19:30 and 21:00 over the menu section.
+ * HungerBanner — Shows between 20:00 and 21:00 over the menu section.
  * Recommends a real 'popular' product from the menu. Dismissable per session.
  */
 export function HungerBanner({ visible }) {
@@ -19,7 +19,7 @@ export function HungerBanner({ visible }) {
   if (!visible || dismissed || !recommended) return null;
 
   return (
-    <div className="relative flex items-center justify-between gap-4 bg-gradient-to-r from-sushi-red/90 to-orange-600/90 backdrop-blur-sm text-white text-sm font-medium px-5 py-3 rounded-lg shadow-xl mb-8 border border-white/10 animate-[fadeInDown_0.5s_ease-out]">
+    <div className="relative flex items-center justify-between gap-4 bg-gradient-to-r from-[#155E5D] to-emerald-700 backdrop-blur-sm text-white text-sm font-medium px-5 py-3 rounded-2xl shadow-xl mb-8 border border-[#155E5D]/20 animate-[fadeInDown_0.5s_ease-out]">
       <div className="flex items-center gap-3">
         <Utensils className="w-5 h-5 flex-shrink-0 opacity-80" />
         <span>
@@ -33,9 +33,11 @@ export function HungerBanner({ visible }) {
       <button
         onClick={() => setDismissed(true)}
         aria-label="Cerrar sugerencia"
-        className="p-1 rounded-full hover:bg-white/20 transition-colors flex-shrink-0"
+        className="min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-white/20 transition-colors flex-shrink-0"
       >
-        <X className="w-4 h-4" />
+        <div className="bg-white/10 p-1.5 rounded-full">
+          <X className="w-4 h-4" />
+        </div>
       </button>
     </div>
   );

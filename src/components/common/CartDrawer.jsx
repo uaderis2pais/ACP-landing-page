@@ -3,6 +3,7 @@ import { useCart } from '../../context/CartContext';
 import { X, ShoppingBag, Plus, Minus, Trash2, ShieldAlert } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { openWhatsApp } from '../../utils/whatsappGuard';
+import { useIsOpen } from '../../hooks/useIsOpen';
 
 // Minimum ms that must pass after cart opens before allowing checkout
 const MIN_OPEN_MS = 3000;
@@ -11,6 +12,7 @@ export function CartDrawer() {
   const { isCartOpen, setIsCartOpen, cartItems, getCartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [blocked, setBlocked] = useState(false);
+  const { isOpen } = useIsOpen();
 
   // Honeypot: a hidden field that humans won't see or fill
   const honeypotRef = useRef('');
@@ -57,6 +59,7 @@ export function CartDrawer() {
       message += "Forma de pago: transferencia / efectivo";
 
       const encodedMessage = encodeURIComponent(message);
+      //const whatsappUrl = `https://wa.me/5493442668753?text=${encodedMessage}`;
       const whatsappUrl = `https://wa.me/5491158774154?text=${encodedMessage}`;
 
       const success = openWhatsApp(whatsappUrl);
@@ -80,16 +83,17 @@ export function CartDrawer() {
         onClick={() => setIsCartOpen(false)}
       />
 
-      <div className={`fixed inset-y-0 right-0 w-full md:w-96 bg-sushi-darkGray border-l border-white/10 transform transition-transform duration-300 z-[60] flex flex-col ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed inset-y-0 right-0 w-full md:w-96 bg-sushi-darkGray border-l border-white/10 shadow-2xl transform transition-transform duration-300 z-[60] flex flex-col ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="p-6 border-b border-white/10 flex justify-between items-center bg-sushi-black">
-          <h3 className="text-xl font-serif font-bold text-white flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-sushi-gold" /> Tu Pedido
+          <h3 className="text-xl font-serif font-bold text-white tracking-tight flex items-center gap-2">
+            <ShoppingBag className="w-5 h-5 text-emerald-400" /> Tu Pedido
           </h3>
           <button
             onClick={() => setIsCartOpen(false)}
-            className="text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/5 transition-colors"
+            aria-label="Cerrar carrito"
+            className="text-gray-400 hover:text-white min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-white/5 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -113,19 +117,19 @@ export function CartDrawer() {
               <p className="text-lg">Tu carrito está vacío</p>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="mt-4 text-sushi-gold hover:text-yellow-400 text-sm border-b border-transparent hover:border-yellow-400 transition-all font-medium"
+                className="mt-4 text-emerald-400 hover:text-emerald-300 text-sm border-b border-transparent hover:border-emerald-400 transition-all font-bold tracking-tight"
               >
                 Volver al menú
               </button>
             </div>
           ) : (
             cartItems.map((item) => (
-              <div key={item.id} className="flex gap-4 bg-black/30 p-4 rounded-md border border-white/5 relative group">
-                <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-sm border border-white/10" />
+              <div key={item.id} className="flex gap-4 bg-sushi-black shadow-lg p-4 rounded-2xl border border-white/5 relative group">
+                <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-xl border border-white/10" />
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <h4 className="font-medium text-sm leading-tight pr-6">{item.name}</h4>
-                    <span className="text-sushi-gold font-bold text-sm block mt-1">
+                    <h4 className="font-bold text-white text-sm leading-tight pr-6">{item.name}</h4>
+                    <span className="text-emerald-400 bg-emerald-400/20 px-2 py-0.5 rounded-full font-black text-xs inline-block mt-2">
                       ${item.price.toLocaleString('es-AR')}
                     </span>
                   </div>
@@ -133,25 +137,28 @@ export function CartDrawer() {
                   <div className="flex items-center gap-3 mt-2">
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="text-gray-400 hover:text-white bg-white/5 p-1 rounded-sm"
+                      aria-label="Disminuir cantidad"
+                      className="text-gray-400 hover:text-white bg-white/5 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-md transition-colors"
                     >
-                      <Minus className="w-3 h-3" />
+                      <Minus className="w-5 h-5" />
                     </button>
-                    <span className="text-sm font-medium w-4 text-center">{item.quantity}</span>
+                    <span className="text-sm font-bold text-white w-4 text-center">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="text-gray-400 hover:text-white bg-white/5 p-1 rounded-sm"
+                      aria-label="Aumentar cantidad"
+                      className="text-gray-400 hover:text-white bg-white/5 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-md transition-colors"
                     >
-                      <Plus className="w-3 h-3" />
+                      <Plus className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="absolute top-2 right-2 text-gray-500 hover:text-sushi-red opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-black/50 rounded-sm"
+                  aria-label="Eliminar producto"
+                  className="absolute top-2 right-2 text-gray-400 hover:text-red-500 bg-black/50 border border-white/5 shadow-sm opacity-0 group-hover:opacity-100 transition-all min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full"
                   title="Eliminar producto"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 className="w-5 h-5" />
                 </button>
               </div>
             ))
@@ -160,23 +167,26 @@ export function CartDrawer() {
 
         <div className="p-6 border-t border-white/10 bg-sushi-black">
           {blocked && (
-            <div className="flex items-center gap-2 text-red-400 text-xs mb-4 bg-red-500/10 border border-red-500/20 rounded-sm px-3 py-2">
+            <div className="flex items-center gap-2 text-red-400 text-xs mb-4 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
               <ShieldAlert className="w-4 h-4 flex-shrink-0" />
               <span>Acción bloqueada. Por favor esperá un momento, revisá tu carrito e intentá de nuevo.</span>
             </div>
           )}
           <div className="flex justify-between items-end mb-6">
-            <span className="text-gray-400 text-sm">Total estimado</span>
-            <span className="font-bold text-2xl text-white">
+            <span className="text-gray-400 text-sm font-semibold">Total estimado</span>
+            <span className="font-black text-2xl text-white tracking-tight">
               ${getCartTotal().toLocaleString('es-AR')}
             </span>
           </div>
           <Button
-            className="w-full text-lg py-6 transition-all"
-            disabled={cartItems.length === 0 || isRedirecting}
+            className={`w-full text-lg py-6 transition-all shadow-md rounded-2xl ${!isOpen ? 'bg-gray-800/50 text-gray-500 hover:bg-gray-800/50 cursor-not-allowed shadow-none' : ''
+              }`}
+            disabled={cartItems.length === 0 || isRedirecting || !isOpen}
             onClick={handleCheckout}
           >
-            {isRedirecting ? 'Redirigiendo a WhatsApp...' : 'Realizar pedido'}
+            {!isOpen
+              ? 'Local cerrado, abrimos a las 20hs'
+              : isRedirecting ? 'Redirigiendo a WhatsApp...' : 'Realizar pedido por WhatsApp'}
           </Button>
         </div>
       </div>

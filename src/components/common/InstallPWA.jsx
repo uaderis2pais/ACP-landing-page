@@ -49,10 +49,12 @@ export function InstallPWA() {
       
       <button 
         onClick={() => setIsVisible(false)} 
-        className="absolute top-2 right-2 p-1 text-gray-400 hover:text-white bg-white/5 rounded-full z-10"
+        className="absolute top-1 right-1 min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-400 hover:text-white rounded-full z-10"
         aria-label="Cerrar banner de instalación"
       >
-        <X className="w-4 h-4" />
+        <div className="bg-white/5 p-1.5 rounded-full">
+          <X className="w-4 h-4" />
+        </div>
       </button>
 
       <div className="flex items-center gap-4 w-full px-2 pt-1">

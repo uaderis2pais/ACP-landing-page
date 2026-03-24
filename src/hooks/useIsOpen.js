@@ -10,13 +10,13 @@ import { useState, useEffect } from 'react';
 
 // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
 const SCHEDULE = {
-  0: { opens: 1170, closes: 1500 }, // Sun  19:30–01:00  (01:00 = 1500 min next day → 60)
+  0: { opens: 1200, closes: 1470 }, // Sun  20:00–00:30
   1: null,                           // Mon  CLOSED
-  2: { opens: 1170, closes: 1440 }, // Tue  19:30–00:00
-  3: { opens: 1170, closes: 1440 }, // Wed  19:30–00:00
-  4: { opens: 1170, closes: 1440 }, // Thu  19:30–00:00
-  5: { opens: 1170, closes: 1500 }, // Fri  19:30–01:00
-  6: { opens: 1170, closes: 1500 }, // Sat  19:30–01:00
+  2: { opens: 1200, closes: 1470 }, // Tue  20:00–00:30
+  3: { opens: 1200, closes: 1470 }, // Wed  20:00–00:30
+  4: { opens: 1200, closes: 1470 }, // Thu  20:00–00:30
+  5: { opens: 1200, closes: 1470 }, // Fri  20:00–00:30
+  6: { opens: 1200, closes: 1470 }, // Sat  20:00–00:30
 };
 
 // Converts "HH:MM" to minutes since midnight
@@ -28,8 +28,8 @@ function checkIsOpen() {
   const mins = toMinutes(now.getHours(), now.getMinutes());
 
   const isMonday = day === 1;
-  // Hungry hour: 19:30 (1170 min) to 21:00 (1260 min)
-  const isHungryHour = mins >= 1170 && mins < 1260;
+  // Hungry hour: 20:00 (1200 min) to 21:00 (1260 min)
+  const isHungryHour = mins >= 1200 && mins < 1260;
 
   const todaySlot = SCHEDULE[day];
   const prevDay = (day + 6) % 7;
