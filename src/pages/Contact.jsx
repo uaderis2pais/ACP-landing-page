@@ -136,7 +136,7 @@ export function Contact() {
           >
             <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#155E5D]/20 transition-colors z-10 pointer-events-none rounded-2xl" />
             <iframe
-              src="https://maps.google.com/maps?q=Agarrame%20como%20puedas%20Sushi%2C%20Concepcion%20del%20Uruguay&hl=es&z=16&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3365.5085323646435!2d-58.235467888325715!3d-32.48583477367739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95afdb1ee0bcb177%3A0xd321aaae6b8e8763!2sAgarrame%20como%20puedas!5e0!3m2!1ses-419!2sar!4v1774474876873!5m2!1ses-419!2sar"
               width="100%"
               height="100%"
               style={{ border: 0 }}
