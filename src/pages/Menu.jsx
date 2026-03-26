@@ -36,12 +36,14 @@ function TagBadge({ tag }) {
 function OpenStatusBar() {
   const { isOpen, isMonday, message } = useIsOpen();
 
+  if (isOpen && !isMonday) {
     return (
       <div className="flex items-center gap-2 justify-center mb-8 py-2 px-4 rounded-full text-sm font-bold w-fit mx-auto border bg-[#155E5D]/10 border-[#155E5D]/30 text-emerald-400 shadow-sm">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
         Abierto ahora — ¡Pedí tu sushi!
       </div>
     );
+  }
 
   // Closed state — show the correct next open time prominently
   const displayMessage = isMonday

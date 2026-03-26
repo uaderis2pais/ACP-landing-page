@@ -27,7 +27,7 @@ function checkIsOpen() {
   const day = now.getDay();
   const mins = toMinutes(now.getHours(), now.getMinutes());
 
-  const isMonday = day === 1;
+  const isMonday = day === 3;
   // Hungry hour: 20:00 (1200 min) to 21:00 (1260 min)
   const isHungryHour = mins >= 1200 && mins < 1260;
 
@@ -45,7 +45,7 @@ function checkIsOpen() {
     return { isOpen: false, isMonday, isHungryHour, message: 'Hoy estamos cerrados. Volvemos el martes 🍣' };
   }
 
-  if (mins >= todaySlot.opens && mins < Math.min(todaySlot.closes, 1440)) {
+  if (!isMonday && mins >= todaySlot.opens && mins < Math.min(todaySlot.closes, 1440)) {
     return { isOpen: true, isMonday, isHungryHour, message: null };
   }
 
