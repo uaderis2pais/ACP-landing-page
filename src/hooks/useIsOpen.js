@@ -27,7 +27,7 @@ function checkIsOpen() {
   const day = now.getDay();
   const mins = toMinutes(now.getHours(), now.getMinutes());
 
-  const isMonday = day === 3;
+  const isMonday = day === 1;
   // Hungry hour: 20:00 (1200 min) to 21:00 (1260 min)
   const isHungryHour = mins >= 1200 && mins < 1260;
 
