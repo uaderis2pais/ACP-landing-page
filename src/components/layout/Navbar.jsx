@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X, ShoppingBag, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { supabase } from '../../lib/supabaseClient';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const { getCartCount, setIsCartOpen } = useCart();
   const location = useLocation();
 
@@ -15,6 +17,20 @@ export function Navbar() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user || null);
+    });
+
+    // Listen for sign-in/sign-out
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const navLinks = [
@@ -96,6 +112,14 @@ export function Navbar() {
                 </span>
               )}
             </button>
+
+            {/* Login / Admin Button Desktop */}
+            <Link
+              to={user ? "/admin" : "/login"}
+              className={`flex items-center gap-2 text-[10px] font-black tracking-widest uppercase px-4 py-2 rounded-xl transition-all duration-300 ${user ? 'bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:scale-105 border border-emerald-500/50' : 'border border-white/10 text-gray-400 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-500/10'}`}
+            >
+              {user ? <><ShieldCheck size={14} /> Ir al Panel</> : <><ShieldAlert size={14} /> Ingreso Admin</>}
+            </Link>
           </div>
 
           <div className="md:hidden flex items-center space-x-4">
@@ -138,6 +162,15 @@ export function Navbar() {
               {link.name}
             </a>
           ))}
+
+          {/* Login / Admin Button Mobile */}
+          <Link
+            to={user ? "/admin" : "/login"}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-center gap-2 mt-6 px-4 py-4 text-[10px] font-black tracking-widest uppercase rounded-xl transition-all duration-300 ${user ? 'bg-gradient-to-r from-emerald-600 to-emerald-800 text-white border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'border border-white/10 text-gray-400'}`}
+          >
+            {user ? <><ShieldCheck size={16} /> Ir al Panel ACP</> : <><ShieldAlert size={16} /> Ingreso Admin</>}
+          </Link>
         </div>
       </div>
     </nav>
