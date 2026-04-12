@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://erqtaunqepzljmeamrrb.supabase.co'
-const supabaseAnonKey = 'sb_publishable_7Ob4YrjjOA_5NSDbIalnyw_wnk7qkKz'
+// Vercel y Vite necesitan el prefijo VITE_ para reconocerlas
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
