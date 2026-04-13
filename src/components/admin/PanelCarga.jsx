@@ -118,6 +118,7 @@ export default function PanelCarga({ rol, sucursalFija }) {
    };
 
    return (
+      <>
       <div className="p-4 md:p-8 flex flex-col lg:flex-row gap-8 animate-in slide-in-from-bottom-4 duration-500">
 
          {/* Columna Izquierda: Configuración y Catálogo */}
@@ -330,5 +331,6 @@ export default function PanelCarga({ rol, sucursalFija }) {
            </div>
         </div>
       )}
+      </>
    );
 }
