@@ -38,11 +38,14 @@ export default function PedidosPendientes({ sucursalFija }) {
     if(!window.confirm('¿Confirmar pedido y sumarlo como venta completada?')) return;
     try {
       setLoading(true);
-      const { error } = await supabase.from('ventas').update({ estado: 'completado' }).eq('id', id);
+      const { data, error } = await supabase.from('ventas').update({ estado: 'completado' }).eq('id', id).select();
       
       // EL FILTRO MÁS IMPORTANTE PARA DETECTAR FALLA RLS (Cambiaron 0 filas pero sin tirar error)
       if (error) {
          throw new Error(error.message || JSON.stringify(error));
+      }
+      if (!data || data.length === 0) {
+         throw new Error("Cero filas actualizadas en la Base de Datos.\nMotivo: Tienes bloqueado el permiso UPDATE en Supabase. No cumple las Políticas RLS de Seguridad.");
       }
       
       alert('✅ Pedido completado.');
