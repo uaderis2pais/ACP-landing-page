@@ -234,7 +234,7 @@ export default function Dashboard() {
              </div>
              
              <div className="h-56 w-full">
-               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+               <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={hourlyData} margin={{top: 0, right: 0, bottom: 0, left: 0}}>
                      <Tooltip cursor={{fill: 'rgba(255,255,255,0.02)'}} contentStyle={{backgroundColor: 'rgba(10,17,10,0.9)', backdropFilter: 'blur(10px)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)'}} itemStyle={{color: '#fff', fontWeight: 'bold'}} labelStyle={{color: '#9ca3af', textTransform: 'uppercase', fontSize: '12px'}} formatter={(value) => [`$${value.toLocaleString()}`, 'Ventas']} />
                      <Bar dataKey="val" fill="url(#colorHourly)" radius={[4, 4, 0, 0]} maxBarSize={28} barSize={20} />
@@ -258,7 +258,7 @@ export default function Dashboard() {
                 </h4>
              </div>
              <div className="h-56 w-full">
-               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+               <ResponsiveContainer width="100%" height="100%">
                  <LineChart data={weekData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                    <defs>
                      <linearGradient id="colorWeek" x1="0" y1="0" x2="0" y2="1">
@@ -285,7 +285,7 @@ export default function Dashboard() {
                </h4>
                <div className="flex lg:flex-col items-center justify-center gap-6 w-full h-full">
                   <div className="w-28 h-28 relative shrink-0 drop-shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie data={sucursalData} innerRadius={28} outerRadius={48} dataKey="value" stroke="none" cornerRadius={4} paddingAngle={2}>
                            {sucursalData.map((entry, index) => (
@@ -346,7 +346,7 @@ export default function Dashboard() {
                </h4>
                <div className="flex lg:flex-col items-center justify-center gap-6 w-full h-full">
                   <div className="w-28 h-28 relative shrink-0 drop-shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                    <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie data={channelData} innerRadius={28} outerRadius={48} dataKey="value" stroke="none" cornerRadius={4} paddingAngle={2}>
                            {channelData.map((entry, index) => (
