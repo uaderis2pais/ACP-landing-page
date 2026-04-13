@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useCart } from '../../context/CartContext';
-import { X, ShoppingBag, Plus, Minus, Trash2, ShieldAlert } from 'lucide-react';
+import { X, ShoppingBag, Plus, Minus, Trash2, ShieldAlert, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { openWhatsApp } from '../../utils/whatsappGuard';
 import { useIsOpen } from '../../hooks/useIsOpen';
