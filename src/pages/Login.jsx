@@ -33,6 +33,10 @@ export function Login() {
 
       if (error) throw error;
       
+      // Pausa estratégica: damos tiempo a que el servidor de Supabase termine de
+      // registrar la cookie/token y que las reglas de RLS reconozcan el uid() del admin.
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       // If success, go to home
       navigate('/');
     } catch (err) {
