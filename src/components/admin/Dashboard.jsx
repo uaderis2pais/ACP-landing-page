@@ -209,7 +209,9 @@ export default function Dashboard() {
           
           <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-6 shadow-[0_0_40px_rgba(16,185,129,0.3)] col-span-1 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -translate-y-12 translate-x-12 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-            <p className="text-xs font-bold text-emerald-100 uppercase tracking-widest mb-3 opacity-90">Ventas 7 Días</p>
+            <p className="text-xs font-bold text-emerald-100 uppercase tracking-widest mb-3 opacity-90">
+              {timeRange === 'dia' ? 'Ventas de Hoy' : timeRange === 'semana' ? 'Ventas esta Semana' : 'Ventas este Mes'}
+            </p>
             <div className="flex items-center justify-between relative z-10">
               <h2 className="text-4xl font-extrabold tracking-tight">${totales.global.toLocaleString()}</h2>
               <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm shadow-inner shadow-white/30">

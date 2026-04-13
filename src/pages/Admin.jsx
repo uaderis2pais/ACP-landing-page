@@ -15,6 +15,21 @@ export const Admin = () => {
   const navigate = useNavigate();
 
   const [sucursal, setSucursal] = useState(null);
+  const [contadorPendientes, setContadorPendientes] = useState(0);
+
+  // Poll pendientes cada 30s para el badge del botón
+  useEffect(() => {
+    const fetchCount = async () => {
+      const { count } = await supabase
+        .from('ventas')
+        .select('*', { count: 'exact', head: true })
+        .eq('estado', 'pendiente');
+      setContadorPendientes(count || 0);
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -133,12 +148,22 @@ export const Admin = () => {
 
             <button
               onClick={() => setActiveTab('pedidos')}
-              className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${activeTab === 'pedidos' ? 'bg-gradient-to-r from-amber-600/20 to-transparent border border-amber-500/20 text-amber-500 font-bold shadow-[inset_4px_0_0_rgba(245,158,11,1)]' : 'border border-transparent text-amber-500/60 hover:bg-amber-500/5 hover:text-amber-500'
-                }`}
+              className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${
+                activeTab === 'pedidos'
+                  ? 'bg-gradient-to-r from-amber-600/20 to-transparent border border-amber-500/20 text-amber-500 font-bold shadow-[inset_4px_0_0_rgba(245,158,11,1)]'
+                  : contadorPendientes > 0
+                    ? 'border border-transparent text-amber-500/80 hover:bg-amber-500/5 hover:text-amber-500'
+                    : 'border border-transparent text-gray-400 hover:bg-white/5 hover:text-white'
+              }`}
             >
               <Inbox size={18} className={`${activeTab === 'pedidos' ? 'drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]' : 'group-hover:scale-110 transition-transform'}`} />
               <span className="text-sm tracking-wide">Pedidos Web</span>
-              <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse ml-auto"></div>
+              {contadorPendientes > 0 && (
+                <div className="ml-auto flex items-center gap-1.5">
+                  <span className="text-[10px] font-black text-amber-500">{contadorPendientes}</span>
+                  <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse"></div>
+                </div>
+              )}
             </button>
           </nav>
 
@@ -175,12 +200,19 @@ export const Admin = () => {
           </button>
           <button
             onClick={() => setActiveTab('pedidos')}
-            className={`flex flex-col items-center justify-center flex-1 py-2.5 rounded-xl transition-all duration-300 ${activeTab === 'pedidos' ? 'bg-gradient-to-t from-amber-600/20 to-transparent text-amber-500' : 'text-amber-500/60 hover:text-amber-400'
-              }`}
+            className={`flex flex-col items-center justify-center flex-1 py-2.5 rounded-xl transition-all duration-300 ${
+              activeTab === 'pedidos'
+                ? 'bg-gradient-to-t from-amber-600/20 to-transparent text-amber-500'
+                : contadorPendientes > 0
+                  ? 'text-amber-500/80 hover:text-amber-400'
+                  : 'text-gray-500 hover:text-gray-300'
+            }`}
           >
             <div className="relative">
               <Inbox size={20} className={activeTab === 'pedidos' ? 'drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] -translate-y-1 transition-transform' : ''} />
-              <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse"></div>
+              {contadorPendientes > 0 && (
+                <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse"></div>
+              )}
             </div>
             <span className={`text-[10px] uppercase font-bold tracking-wider mt-1.5 ${activeTab === 'pedidos' ? '' : 'scale-90 opacity-50'}`}>Web</span>
             {activeTab === 'pedidos' && <div className="w-1 h-1 bg-amber-500 rounded-full mt-1 animate-pulse"></div>}
