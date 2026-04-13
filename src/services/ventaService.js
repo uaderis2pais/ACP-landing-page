@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabaseClient';
 
-export const registrarVenta = async (cart, total, sucursalActiva, vendedorNombre) => {
+export const registrarVenta = async (cart, total, sucursalActiva, vendedorNombre, estado = 'pendiente') => {
   try {
     // 1. Mapear el carrito para guardar un JSON prolijo en detalle_productos
     const detalleProductos = cart.map(item => ({
@@ -16,6 +16,7 @@ export const registrarVenta = async (cart, total, sucursalActiva, vendedorNombre
       canal: 'Mostrador', // Ajustar según corresponda
       metodo_pago: 'Efectivo', // Ajustar según corresponda
       monto_total: total,
+      estado: estado, // Mismas directrices que requirió el cliente ("completado" o "pendiente")
       detalle_productos: detalleProductos
     };
 

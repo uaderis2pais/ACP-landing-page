@@ -10,6 +10,7 @@ export default function PanelCarga({ rol, sucursalFija }) {
    const [productos, setProductos] = useState([]);
    const [loading, setLoading] = useState(false);
    const [loadingData, setLoadingData] = useState(true);
+   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
    // Estado para el acordeón de categorías (podemos guardar qué categorías están abiertas)
    const [openCategories, setOpenCategories] = useState({});
@@ -81,6 +82,16 @@ export default function PanelCarga({ rol, sucursalFija }) {
 
    const handleCheckout = async () => {
       if (cart.length === 0) return;
+      // Lógica de Vendedor (carga manual local): estado = completado automáticamente
+      if (rol === 'vendedor' || rol === 'admin') {
+         await ejecutarVenta('completado');
+      } else {
+         // Usuario público: Doble paso para validación de WhatsApp
+         setShowWhatsAppModal(true);
+      }
+   };
+
+   const ejecutarVenta = async (estado) => {
       setLoading(true);
 
       const cartFormatd = cart.map(item => ({
@@ -89,14 +100,20 @@ export default function PanelCarga({ rol, sucursalFija }) {
          precio: item.price || item.precio || 0
       }));
 
-      const success = await registrarVenta(cartFormatd, total, sucursal, `Usuario ${rol}`);
+      const nombreVendedor = rol ? `Usuario ${rol}` : 'Cliente Web';
+      const success = await registrarVenta(cartFormatd, total, sucursal, nombreVendedor, estado);
 
       setLoading(false);
       if (success) {
-         alert("¡Venta registrada y enviada a WhatsApp!");
+         if (estado === 'pendiente') {
+            alert("¡Pedido registrado exitosamente! Esperamos tu mensaje por WhatsApp.");
+         } else {
+            alert("¡Venta registrada y completada exitosamente!");
+         }
+         setShowWhatsAppModal(false);
          setCart([]);
       } else {
-         alert("Hubo un error al guardar la venta. Reintentá.");
+         alert("Hubo un error al guardar tu pedido. Reintentá.");
       }
    };
 
@@ -276,5 +293,42 @@ export default function PanelCarga({ rol, sucursalFija }) {
          </div>
 
       </div>
+
+      {/* MODAL DE DOBLE PASO */}
+      {showWhatsAppModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+           <div className="bg-[#0c130d] border border-emerald-500/30 rounded-2xl p-8 max-w-sm w-full shadow-[0_20px_50px_rgba(16,185,129,0.2)] animate-in zoom-in-95 duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500 opacity-10 blur-[50px] pointer-events-none"></div>
+              
+              <div className="flex justify-center mb-4">
+                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                    <MessageCircle size={32} className="text-emerald-400" />
+                 </div>
+              </div>
+              
+              <h3 className="text-xl font-black text-white mb-3 text-center uppercase tracking-widest drop-shadow-[0_0_5px_rgba(16,185,129,0.5)]">¡Tu pedido está casi listo!</h3>
+              <p className="text-gray-400 text-center text-sm mb-8 leading-relaxed">
+                 Para que empecemos a prepararlo, <strong className="text-emerald-400 font-bold block mt-1">confirmá el envío por WhatsApp</strong>.
+              </p>
+              
+              <div className="flex flex-col gap-3 relative z-10">
+                 <button 
+                    onClick={() => ejecutarVenta('pendiente')} 
+                    disabled={loading} 
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-black tracking-widest text-sm shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all flex items-center justify-center gap-2"
+                 >
+                    {loading ? 'CARGANDO...' : 'CONFIRMAR POR WHATSAPP'}
+                 </button>
+                 <button 
+                    onClick={() => setShowWhatsAppModal(false)} 
+                    disabled={loading}
+                    className="w-full py-3 rounded-xl bg-transparent border border-white/10 text-gray-400 hover:text-white font-bold text-xs uppercase tracking-wider transition-colors"
+                 >
+                    Volver a la tienda
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
    );
 }

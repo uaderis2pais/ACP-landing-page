@@ -7,6 +7,7 @@ const COLORS = ['#10b981', '#34d399', '#059669'];
 
 export default function Dashboard() {
   const [ventas, setVentas] = useState([]);
+  const [pendientes, setPendientes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Totales y Gráficos
@@ -61,7 +62,11 @@ export default function Dashboard() {
       if (error) throw error;
       
       const v = data || [];
-      setVentas(v);
+      const ventasCompletadas = v.filter(item => item.estado !== 'pendiente');
+      const ventasPendientes = v.filter(item => item.estado === 'pendiente');
+      
+      setVentas(ventasCompletadas); // Reemplazado para que la tabla inferior solo muestre completadas
+      setPendientes(ventasPendientes); // Guardar estado
       
       let gl = 0, cc = 0, cl = 0;
       const hMap = {};
@@ -73,7 +78,7 @@ export default function Dashboard() {
       };      // Canales
       const chanMap = {};
 
-      v.forEach(item => {
+      ventasCompletadas.forEach(item => {
         const monto = parseFloat(item.monto_total || 0);
         const itemDate = new Date(item.fecha || item.created_at); // fallback a created_at
         
@@ -125,7 +130,7 @@ export default function Dashboard() {
 
       // Top Productos Reales
       const prodMap = {};
-      v.forEach(item => {
+      ventasCompletadas.forEach(item => {
          try {
             if (item.detalle_productos) {
                const items = typeof item.detalle_productos === 'string' 
@@ -391,7 +396,52 @@ export default function Dashboard() {
            </div>
         </div>
 
-        {/* Tabla Operaciones Recientes Full Width */}
+        {/* Sección Pedidos Pendientes */}
+        {pendientes.length > 0 && (
+          <div className="bg-[#0c130d]/80 backdrop-blur-xl border border-amber-500/50 rounded-2xl p-6 shadow-[0_0_20px_rgba(245,158,11,0.15)] mt-6 animate-pulse">
+            <div className="flex justify-between items-center mb-6">
+                <h4 className="text-xs font-black text-amber-500 uppercase tracking-widest flex items-center gap-2">
+                  <Clock size={16} className="text-amber-500" /> Pedidos por Confirmar ({pendientes.length})
+                </h4>
+            </div>
+            <div className="overflow-x-auto custom-scrollbar pb-2">
+               <table className="w-full text-left text-sm text-gray-400 whitespace-nowrap">
+                  <thead className="text-[10px] uppercase bg-amber-900/20 text-amber-500/70 border-b border-amber-500/20 font-black tracking-widest">
+                     <tr>
+                        <th className="px-4 py-4 rounded-tl-xl">Fecha y Hora</th>
+                        <th className="px-4 py-4">Sucursal</th>
+                        <th className="px-4 py-4">Total</th>
+                        <th className="px-4 py-4 text-right rounded-tr-xl">Acción</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {pendientes.map((v) => (
+                        <tr key={v.id} className="border-b border-amber-500/10 hover:bg-amber-900/10 transition-colors group">
+                           <td className="px-4 py-3 text-amber-100 group-hover:text-white transition-colors">{new Date(v.fecha || v.created_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</td>
+                           <td className="px-4 py-3 text-amber-100 group-hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold">{v.sucursal}</td>
+                           <td className="px-4 py-3 font-black text-amber-400 drop-shadow-sm">${parseFloat(v.monto_total || 0).toLocaleString()}</td>
+                           <td className="px-4 py-3 text-right">
+                              <button
+                                 onClick={async () => {
+                                    if(window.confirm('¿Confirmar pago y registrar venta final?')) {
+                                       await supabase.from('ventas').update({ estado: 'completado' }).eq('id', v.id);
+                                       fetchVentas();
+                                    }
+                                 }}
+                                 className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-emerald-500 hover:to-emerald-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
+                              >
+                                 Confirmar Pedido
+                              </button>
+                           </td>
+                        </tr>
+                     ))}
+                  </tbody>
+               </table>
+            </div>
+          </div>
+        )}
+
+        {/* Tabla Operaciones Recientes Full Width (Completadas solamente) */}
         <div className="bg-[#0c130d]/80 backdrop-blur-xl border border-white/5 rounded-2xl p-6 shadow-lg mt-6">
             <div className="flex justify-between items-center mb-6">
                 <h4 className="text-xs font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
