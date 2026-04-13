@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { Layout } from './components/layout/Layout';
 import { CartProvider } from './context/CartContext';
+import { UpdateToast } from './components/common/UpdateToast';
 
 // Lazy loading pages
 const Home = React.lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
@@ -38,6 +39,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      <UpdateToast />
       <Analytics />
     </CartProvider>
   );
