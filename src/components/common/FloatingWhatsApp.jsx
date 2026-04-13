@@ -3,7 +3,7 @@ import { openWhatsApp } from '../../utils/whatsappGuard';
 export function FloatingWhatsApp() {
   const handleClick = (e) => {
     e.preventDefault();
-    openWhatsApp('https://wa.me/5491158774154');
+    openWhatsApp('https://wa.me/5493442668753');
   };
 
   return (

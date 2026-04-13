@@ -47,6 +47,6 @@ export function openWhatsApp(url) {
 /** Convenience builder — encodes the message and calls openWhatsApp */
 export function openWhatsAppWithMessage(message) {
   return openWhatsApp(
-    `https://wa.me/5491158774154?text=${encodeURIComponent(message)}`
+    `https://wa.me/5493442668753?text=${encodeURIComponent(message)}`
   );
 }
