@@ -9,6 +9,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'LogoApp.jpg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      },
       manifest: {
         name: 'Agarrame como puedas',
         short_name: 'ACP',
