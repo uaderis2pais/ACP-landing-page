@@ -4,6 +4,7 @@ import { X, ShoppingBag, Plus, Minus, Trash2, ShieldAlert } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { openWhatsApp } from '../../utils/whatsappGuard';
 import { useIsOpen } from '../../hooks/useIsOpen';
+import { registrarVenta } from '../../services/ventaService';
 
 // Minimum ms that must pass after cart opens before allowing checkout
 const MIN_OPEN_MS = 3000;
@@ -12,6 +13,7 @@ export function CartDrawer() {
   const { isCartOpen, setIsCartOpen, cartItems, getCartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [blocked, setBlocked] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const { isOpen } = useIsOpen();
 
   // Honeypot: a hidden field that humans won't see or fill
@@ -45,35 +47,30 @@ export function CartDrawer() {
       return;
     }
 
+    // Mostrar modal en vez de redirigir directamente
+    setShowWhatsAppModal(true);
+  };
+
+  const ejecutarVentaPublica = async () => {
     setIsRedirecting(true);
 
-    setTimeout(() => {
-      let message = "Hola! Quiero hacer un pedido:\n\n";
-      cartItems.forEach(item => {
-        message += `- ${item.quantity}x ${item.name} ($${item.price.toLocaleString('es-AR')} c/u)\n`;
-      });
+    const cartFormatd = cartItems.map(item => ({
+       nombre: item.name,
+       cantidad: item.quantity,
+       precio: item.price
+    }));
 
-      message += `\nTotal: $${getCartTotal().toLocaleString('es-AR')}\n\n`;
-      message += "Nombre: \n";
-      message += "Dirección (si es delivery): \n";
-      message += "Forma de pago: transferencia / efectivo";
+    // Suponemos Concepción como base public temporal, ajustá si manejan multidirección web
+    const success = await registrarVenta(cartFormatd, getCartTotal(), 'Concepcion', 'Cliente Web', 'pendiente');
 
-      const encodedMessage = encodeURIComponent(message);
-      //const whatsappUrl = `https://wa.me/5493442668753?text=${encodedMessage}`;
-      const whatsappUrl = `https://wa.me/5491158774154?text=${encodedMessage}`;
-
-      const success = openWhatsApp(whatsappUrl);
-
-      if (!success) {
-        setBlocked(true);
-        setIsRedirecting(false);
-        return;
-      }
-
+    if (success) {
       clearCart();
       setIsCartOpen(false);
-      setIsRedirecting(false);
-    }, 800);
+      setShowWhatsAppModal(false);
+    } else {
+      alert("Hubo un error al procesar el pedido. Intentá de nuevo.");
+    }
+    setIsRedirecting(false);
   };
 
   return (
@@ -190,6 +187,43 @@ export function CartDrawer() {
           </Button>
         </div>
       </div>
+
+      {/* MODAL DE DOBLE PASO WEB */}
+      {showWhatsAppModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+           <div className="bg-[#0c130d] border border-emerald-500/30 rounded-2xl p-8 max-w-sm w-full shadow-[0_20px_50px_rgba(16,185,129,0.2)] animate-in zoom-in-95 duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500 opacity-10 blur-[50px] pointer-events-none"></div>
+              
+              <div className="flex justify-center mb-4">
+                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                    <MessageCircle size={32} className="text-emerald-400" />
+                 </div>
+              </div>
+              
+              <h3 className="text-xl font-black text-white mb-3 text-center uppercase tracking-widest drop-shadow-[0_0_5px_rgba(16,185,129,0.5)]">¡Tu pedido está casi listo!</h3>
+              <p className="text-gray-400 text-center text-sm mb-8 leading-relaxed">
+                 Para que empecemos a prepararlo, <strong className="text-emerald-400 font-bold block mt-1">confirmá el envío por WhatsApp</strong>.
+              </p>
+              
+              <div className="flex flex-col gap-3 relative z-10">
+                 <button 
+                    onClick={ejecutarVentaPublica} 
+                    disabled={isRedirecting} 
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-black tracking-widest text-sm shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all flex items-center justify-center gap-2"
+                 >
+                    {isRedirecting ? 'CARGANDO...' : 'CONFIRMAR Y ENVIAR MENSAJE'}
+                 </button>
+                 <button 
+                    onClick={() => setShowWhatsAppModal(false)} 
+                    disabled={isRedirecting}
+                    className="w-full py-3 rounded-xl bg-transparent border border-white/10 text-gray-400 hover:text-white font-bold text-xs uppercase tracking-wider transition-colors"
+                 >
+                    Volver al carrito
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
     </>
   );
 }
