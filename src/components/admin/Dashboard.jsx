@@ -27,20 +27,36 @@ export default function Dashboard() {
     try {
       setPage(1);
       setLoading(true);
-      // Rango de fechas dinámico
-      const targetDate = new Date();
+      // Rango de fechas dinámico segmentado
+      const startDate = new Date();
+      startDate.setHours(0, 0, 0, 0);
+
+      const endDate = new Date();
+      endDate.setHours(23, 59, 59, 999);
+
       if (timeRange === 'dia') {
-        targetDate.setDate(targetDate.getDate() - 1);
+        // Hoy desde las 00:00 hasta las 23:59
+      } else if (timeRange === 'semana') {
+        // Semana actual: De Lunes a Domingo
+        const day = startDate.getDay();
+        const diff = startDate.getDate() - day + (day === 0 ? -6 : 1); // Ajuste porque el 0 es domingo
+        startDate.setDate(diff);
+
+        const endDay = endDate.getDay();
+        const endDiff = endDate.getDate() - endDay + (endDay === 0 ? 0 : 7);
+        endDate.setDate(endDiff);
       } else if (timeRange === 'mes') {
-        targetDate.setMonth(targetDate.getMonth() - 1);
-      } else {
-        targetDate.setDate(targetDate.getDate() - 7);
+        // Mes actual: Día 1 al último día del mes
+        startDate.setDate(1);
+        endDate.setMonth(endDate.getMonth() + 1);
+        endDate.setDate(0);
       }
 
       const { data, error } = await supabase
         .from('ventas')
         .select('*')
-        .gte('fecha', targetDate.toISOString()); // O asumiendo que usan 'fecha' y es un ISO string
+        .gte('fecha', startDate.toISOString())
+        .lte('fecha', endDate.toISOString());
 
       if (error) throw error;
       
