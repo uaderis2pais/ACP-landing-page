@@ -1,9 +1,9 @@
-﻿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { X, Utensils } from 'lucide-react';
 import { menuData } from '../../data/data';
 
 /**
- * HungerBanner — Shows between 20:00 and 21:00 over the menu section.
+ * HungerBanner — Shows between 19:30 and 20:30 over the menu section.
  * Recommends a real 'popular' product from the menu. Dismissable per session.
  */
 export function HungerBanner({ visible }) {

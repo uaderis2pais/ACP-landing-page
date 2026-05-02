@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, DollarSign, Clock, MapPin, Hash, Package } from 'lucide-react';
@@ -64,7 +64,7 @@ export default function Dashboard() {
       if (error) throw error;
       
       const v = data || [];
-      const ventasCompletadas = v.filter(item => item.estado !== 'pendiente');
+      const ventasCompletadas = v.filter(item => item.estado === 'completado');
       
       setVentas(ventasCompletadas);
       

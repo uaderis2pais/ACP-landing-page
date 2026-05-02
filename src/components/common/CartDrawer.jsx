@@ -1,9 +1,10 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCart } from '../../context/CartContext';
 import { X, ShoppingBag, Plus, Minus, Trash2, ShieldAlert, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useIsOpen } from '../../hooks/useIsOpen';
 import { registrarVenta } from '../../services/ventaService';
+import { openWhatsAppWithMessage } from '../../utils/whatsappGuard';
 
 // Minimum ms that must pass after cart opens before allowing checkout
 const MIN_OPEN_MS = 3000;
@@ -49,20 +50,28 @@ export function CartDrawer() {
     // Mostrar modal en vez de redirigir directamente
     setShowWhatsAppModal(true);
   };
-
   const ejecutarVentaPublica = async () => {
     setIsRedirecting(true);
-
     const cartFormatd = cartItems.map(item => ({
       nombre: item.name,
       cantidad: item.quantity,
       precio: item.price
     }));
 
-    // Suponemos Concepción como base public temporal, ajustá si manejan multidirección web
     const success = await registrarVenta(cartFormatd, getCartTotal(), 'Concepcion', 'Cliente Web', 'pendiente');
 
     if (success) {
+      // Construir mensaje de WhatsApp
+      let message = `*¡Hola! Nuevo pedido desde la web!*\n\n`;
+      message += `*Detalle:*\n`;
+      cartItems.forEach(item => {
+        message += `- ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toLocaleString('es-AR')})\n`;
+      });
+      message += `\n*Total estimado:* $${getCartTotal().toLocaleString('es-AR')}\n\n`;
+      message += `_Por favor, confírmenme para enviarme sus datos (Dirección, Forma de pago, etc)_`;
+
+      openWhatsAppWithMessage(message);
+
       clearCart();
       setIsCartOpen(false);
       setShowWhatsAppModal(false);
@@ -181,7 +190,7 @@ export function CartDrawer() {
             onClick={handleCheckout}
           >
             {!isOpen
-              ? 'Local cerrado, abrimos a las 20hs'
+              ? 'Local cerrado, abrimos a las 19:30hs'
               : isRedirecting ? 'Redirigiendo a WhatsApp...' : 'Realizar pedido por WhatsApp'}
           </Button>
         </div>

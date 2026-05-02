@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dashboard from '../components/admin/Dashboard';
 import PanelCarga from '../components/admin/PanelCarga';
 import { Navbar } from '../components/layout/Navbar';
@@ -18,18 +18,43 @@ export const Admin = () => {
   const [sucursal, setSucursal] = useState(null);
   const [contadorPendientes, setContadorPendientes] = useState(0);
 
-  // Poll pendientes cada 30s para el badge del botón
+  // Escuchar cambios en tiempo real para el contador
   useEffect(() => {
     const fetchCount = async () => {
-      const { count } = await supabase
-        .from('ventas')
-        .select('*', { count: 'exact', head: true })
-        .eq('estado', 'pendiente');
-      setContadorPendientes(count || 0);
+      try {
+        const { count, error } = await supabase
+          .from('ventas')
+          .select('*', { count: 'exact', head: true })
+          .eq('estado', 'pendiente');
+        
+        if (error) throw error;
+        setContadorPendientes(count || 0);
+        console.log("Contador actualizado:", count);
+      } catch (err) {
+        console.error("Error al obtener contador:", err);
+      }
     };
+
     fetchCount();
-    const interval = setInterval(fetchCount, 30000);
-    return () => clearInterval(interval);
+
+    // Suscripción Realtime (Asegurate de tener habilitada la REPLICACIÓN en el dashboard de Supabase)
+    const channel = supabase
+      .channel('ventas-pendientes-admin')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'ventas' },
+        (payload) => {
+          console.log("Cambio detectado en Realtime:", payload);
+          fetchCount();
+        }
+      )
+      .subscribe((status) => {
+        console.log("Estado suscripción Realtime:", status);
+      });
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   useEffect(() => {

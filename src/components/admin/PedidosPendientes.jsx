@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { Clock, RefreshCw } from 'lucide-react';
 
@@ -32,6 +32,18 @@ export default function PedidosPendientes({ sucursalFija }) {
 
   useEffect(() => {
     fetchPendientes();
+
+    // Suscripción Realtime para actualizar la lista
+    const channel = supabase
+      .channel('public:ventas_lista')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'ventas' }, () => {
+        fetchPendientes();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [sucursalFija]);
 
   const handleConfirm = async (id) => {
@@ -40,7 +52,6 @@ export default function PedidosPendientes({ sucursalFija }) {
       setLoading(true);
       const { data, error } = await supabase.from('ventas').update({ estado: 'completado' }).eq('id', id).select();
       
-      // EL FILTRO MÁS IMPORTANTE PARA DETECTAR FALLA RLS (Cambiaron 0 filas pero sin tirar error)
       if (error) {
          throw new Error(error.message || JSON.stringify(error));
       }
@@ -49,10 +60,31 @@ export default function PedidosPendientes({ sucursalFija }) {
       }
       
       alert('✅ Pedido completado.');
-      fetchPendientes(); // recargar
+      fetchPendientes(); 
     } catch (e) {
-      alert(`❌ ERROR EN BASE DE DATOS (Probable bloqueo RLS):\n\n${e.message}\n\n-> Ir al Panel de Supabase -> Authentication -> Policies -> Habilitar UPDATE para la tabla 'ventas'.`);
+      alert(`❌ ERROR EN BASE DE DATOS (Probable bloqueo RLS):\n\n${e.message}`);
       console.error('Error detallado updatting:', e);
+      setLoading(false);
+    }
+  };
+
+  const handleCancel = async (id) => {
+    if(!window.confirm('¿Cancelar este pedido? No se sumará a las ventas y desaparecerá de la lista.')) return;
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.from('ventas').update({ estado: 'cancelado' }).eq('id', id).select();
+      
+      if (error) {
+         throw new Error(error.message || JSON.stringify(error));
+      }
+      if (!data || data.length === 0) {
+         throw new Error("Cero filas actualizadas en la Base de Datos.");
+      }
+      
+      alert('❌ Pedido cancelado.');
+      fetchPendientes(); 
+    } catch (e) {
+      alert(`❌ ERROR al cancelar: ${e.message}`);
       setLoading(false);
     }
   };
@@ -103,12 +135,20 @@ export default function PedidosPendientes({ sucursalFija }) {
                         ))}
                      </div>
 
-                     <button
-                        onClick={() => handleConfirm(v.id)}
-                        className="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-brand-500 hover:to-brand-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
-                     >
-                        Confirmar y Acreditar Pedido
-                     </button>
+                      <div className="flex gap-2">
+                        <button
+                           onClick={() => handleConfirm(v.id)}
+                           className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-brand-500 hover:to-brand-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
+                        >
+                           Confirmar
+                        </button>
+                        <button
+                           onClick={() => handleCancel(v.id)}
+                           className="px-4 py-3 bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all"
+                        >
+                           Cancelar
+                        </button>
+                      </div>
                   </div>
                ))}
             </div>
@@ -133,12 +173,18 @@ export default function PedidosPendientes({ sucursalFija }) {
                            </td>
                            <td className="px-4 py-3 text-amber-100 group-hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold">{v.sucursal}</td>
                            <td className="px-4 py-3 font-black text-amber-400 drop-shadow-sm">${parseFloat(v.monto_total || 0).toLocaleString()}</td>
-                           <td className="px-4 py-3 text-right">
+                           <td className="px-4 py-3 text-right flex items-center justify-end gap-2">
                               <button
                                  onClick={() => handleConfirm(v.id)}
                                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-brand-500 hover:to-brand-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
                               >
-                                 Confirmar Pedido
+                                 Confirmar
+                              </button>
+                              <button
+                                 onClick={() => handleCancel(v.id)}
+                                 className="px-4 py-2 bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all"
+                              >
+                                 Cancelar
                               </button>
                            </td>
                         </tr>

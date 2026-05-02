@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useInView } from '../../hooks/useInView';
 import { config } from '../../config';
@@ -11,11 +11,11 @@ const FAQ_DATA = [
   },
   {
     q: '¿A qué hora abren?',
-    a: 'Abrimos de martes a domingo a partir de las 20:00. Los lunes estamos cerrados para descansar y preparar los mejores ingredientes del día siguiente.',
+    a: 'Abrimos todos los días a partir de las 19:30. Atendemos hasta las 00:30.',
   },
   {
     q: '¿Hasta qué hora atienden los pedidos?',
-    a: 'Atendemos de martes a domingo desde las 20:00 hasta las 00:30.',
+    a: 'Atendemos todos los días desde las 19:30 hasta las 00:30.',
   },
   {
     q: '¿Cómo se hace un pedido?',

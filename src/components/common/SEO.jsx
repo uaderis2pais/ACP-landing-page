@@ -30,9 +30,7 @@ const BUSINESS = {
   },
   openingHours: [
     // Martes a Jueves
-    { dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday'], opens: '20:00', closes: '00:30' },
-    // Viernes a Domingo
-    { dayOfWeek: ['Friday', 'Saturday', 'Sunday'], opens: '20:00', closes: '00:30' },
+    { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '19:30', closes: '00:30' },
     // Lunes: cerrado (omitido intencionalmente — ausencia = cerrado)
   ],
   sameAs: [
