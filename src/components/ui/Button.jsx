@@ -1,9 +1,9 @@
-import { forwardRef } from 'react';
+﻿import { forwardRef } from 'react';
 import { cn } from '../../utils/cn';
 
 const variants = {
-  primary: 'bg-[#155E5D] text-white hover:bg-[#0f4645] shadow-md hover:shadow-lg',
-  outline: 'bg-transparent border border-white/20 text-white hover:border-[#155E5D] hover:text-[#155E5D] hover:bg-white/5 shadow-sm',
+  primary: 'bg-[#7C5228] text-white hover:bg-[#5C3A1A] shadow-md hover:shadow-lg',
+  outline: 'bg-transparent border border-white/20 text-white hover:border-[#7C5228] hover:text-[#7C5228] hover:bg-white/5 shadow-sm',
   ghost: 'bg-transparent hover:bg-white/5 text-gray-400',
 };
 

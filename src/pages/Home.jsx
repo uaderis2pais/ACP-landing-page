@@ -5,6 +5,7 @@ import { useInView } from '../hooks/useInView';
 import { useIsOpen } from '../hooks/useIsOpen';
 import { MessageCircle, Calendar } from 'lucide-react';
 import { openWhatsAppWithMessage } from '../utils/whatsappGuard';
+import { config } from '../config';
 
 const Menu = React.lazy(() => import('./Menu').then(mod => ({ default: mod.Menu })));
 const Contact = React.lazy(() => import('./Contact').then(mod => ({ default: mod.Contact })));
@@ -26,7 +27,7 @@ function MondayHero({ heroRef, heroVisible }) {
           />
           <img
             src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1280&auto=format&fit=crop"
-            alt="Sushi de alta calidad"
+            alt={`${config.nombreDelNegocio} - Sushi de alta calidad`}
             width="1280"
             height="800"
             fetchPriority="high"
@@ -49,7 +50,7 @@ function MondayHero({ heroRef, heroVisible }) {
 
         <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight text-white drop-shadow-md">
           Volvemos mañana<br />
-          <span className="text-emerald-400">¡Con todo!</span>
+          <span className="text-brand-400">¡Con todo!</span>
         </h1>
 
         <p className="text-lg text-gray-300 mb-3 max-w-xl mx-auto font-light leading-relaxed">
@@ -63,7 +64,7 @@ function MondayHero({ heroRef, heroVisible }) {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button 
             onClick={() => openWhatsAppWithMessage('Hola! Quiero hacer una reserva anticipada para mañana:')}
-            className="w-full sm:w-auto bg-[#155E5D] hover:bg-[#0f4645] text-white flex items-center gap-2 justify-center"
+            className="w-full sm:w-auto bg-[#7C5228] hover:bg-[#5C3A1A] text-white flex items-center gap-2 justify-center"
           >
             <MessageCircle className="w-4 h-4" />
             Reservar para mañana
@@ -77,14 +78,10 @@ function MondayHero({ heroRef, heroVisible }) {
         </div>
 
         {/* Schedule reminder */}
-        <div className="mt-12 grid grid-cols-2 gap-4 max-w-sm mx-auto text-xs text-gray-400">
-          <div className="bg-black/30 rounded-2xl shadow-sm px-4 py-3 border border-white/10">
-            <p className="font-bold text-gray-200 mb-1">Mar – Jue</p>
-            <p>20:00 → 00:30</p>
-          </div>
-          <div className="bg-black/30 rounded-2xl shadow-sm px-4 py-3 border border-white/10">
-            <p className="font-bold text-gray-200 mb-1">Vie – Dom</p>
-            <p>20:00 → 00:30</p>
+        <div className="mt-12 flex justify-center">
+          <div className="bg-black/30 rounded-2xl shadow-sm px-6 py-3 border border-white/10 text-xs text-gray-400">
+            <p className="font-bold text-gray-200 mb-1">{config.horarios.todos.label}</p>
+            <p>{config.horarios.todos.value}</p>
           </div>
         </div>
       </div>
@@ -108,7 +105,7 @@ function NormalHero({ heroRef, heroVisible }) {
           />
           <img
             src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1280&auto=format&fit=crop"
-            alt="Agarrame como puedas - Sushi Premium"
+            alt={`${config.nombreDelNegocio} - ${config.eslogan}`}
             width="1280"
             height="800"
             fetchPriority="high"
@@ -123,14 +120,14 @@ function NormalHero({ heroRef, heroVisible }) {
         ref={heroRef}
         className={`relative z-10 text-center px-4 max-w-4xl mx-auto mt-16 anim-fade-up ${heroVisible ? 'in-view' : ''}`}
       >
-        <span className="text-emerald-400 text-sm tracking-[0.3em] uppercase mb-4 block font-bold">
-          Sushi Premium
+        <span className="text-brand-400 text-sm tracking-[0.3em] uppercase mb-4 block font-bold">
+          {config.eslogan}
         </span>
         <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight text-white drop-shadow-lg">
-          Agarrame<br/>como puedas
+          {config.nombreDelNegocio}
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-          El sushi más fresco de Concepción del Uruguay. Una experiencia gastronómica inigualable.
+          {config.descripcion}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a href="#menu" className="w-full sm:w-auto">
@@ -147,10 +144,10 @@ function NormalHero({ heroRef, heroVisible }) {
 
 /* ─── Page ────────────────────────────────────────────────────────────────── */
 export function Home() {
-  const [heroRef, heroVisible]         = useInView({ threshold: 0.1 });
-  const [aboutImgRef, aboutImgVisible] = useInView();
+  const [heroRef, heroVisible]           = useInView({ threshold: 0.1 });
+  const [aboutImgRef, aboutImgVisible]   = useInView();
   const [aboutTextRef, aboutTextVisible] = useInView();
-  const [ctaRef, ctaVisible]           = useInView({ threshold: 0.2 });
+  const [ctaRef, ctaVisible]             = useInView({ threshold: 0.2 });
 
   const { isMonday, isHungryHour } = useIsOpen();
 
@@ -171,7 +168,7 @@ export function Home() {
               ref={aboutImgRef}
               className={`order-2 md:order-1 relative group anim-fade-left ${aboutImgVisible ? 'in-view' : ''}`}
             >
-              <div className="absolute -inset-4 border border-[#155E5D]/20 transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500 rounded-2xl" />
+              <div className="absolute -inset-4 border border-[#7C5228]/20 transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500 rounded-2xl" />
               <img
                 src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=800&auto=format&fit=crop"
                 alt="Maestro sushero preparando piezas frescas"
@@ -188,12 +185,12 @@ export function Home() {
             >
               <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-white tracking-tight">El Arte del Sushi</h2>
               <p className="text-gray-300 mb-8 leading-relaxed font-light text-lg">
-                Restaurante asiático especializado en sushi fresco, con ingredientes de calidad y gran variedad de opciones. Nos dedicamos a perfeccionar cada bocado para brindarte una experiencia auténtica.
+                {config.descripcion}
               </p>
 
               <div className={`space-y-4 anim-stagger ${aboutTextVisible ? 'in-view' : ''}`}>
                 {[
-                  { title: 'Ingredientes Frescos', desc: 'Seleccionamos la mejor pesca del día y vegetales de temporada.', borderCol: 'border-l-[#155E5D]' },
+                  { title: 'Ingredientes Frescos', desc: 'Seleccionamos la mejor pesca del día y vegetales de temporada.', borderCol: 'border-l-[#7C5228]' },
                   { title: 'Variedad Exquisita', desc: 'Desde clásicos hasta creaciones de autor únicas en la zona.', borderCol: 'border-l-amber-400' },
                   { title: 'Experiencia Gastronómica', desc: 'No es solo comida, es un viaje de sabores en cada pieza.', borderCol: 'border-l-rose-400' }
                 ].map((item, i) => (
@@ -212,7 +209,7 @@ export function Home() {
       </section>
 
       {/* ── Suspense wrapping below-the-fold content ───────── */}
-      <Suspense fallback={<div className="min-h-screen bg-sushi-black flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"></div></div>}>
+      <Suspense fallback={<div className="min-h-screen bg-sushi-black flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-brand-400 border-t-transparent rounded-full animate-spin"></div></div>}>
         {/* ── Menú (with hunger banner) ─────────────────────── */}
         <div className="relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 -mb-16">
@@ -229,7 +226,7 @@ export function Home() {
       </Suspense>
 
       {/* ── CTA final ────────────────────────────────────── */}
-      <section className="py-32 bg-[#155E5D] relative overflow-hidden text-center mt-24">
+      <section className="py-32 bg-[#7C5228] relative overflow-hidden text-center mt-24">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10" />
         <div
           ref={ctaRef}

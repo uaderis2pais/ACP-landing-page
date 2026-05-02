@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { Clock, RefreshCw } from 'lucide-react';
 
@@ -71,7 +71,7 @@ export default function PedidosPendientes({ sucursalFija }) {
        </div>
 
        {loading && pendientes.length === 0 ? (
-          <div className="text-center py-10 text-emerald-500 animate-pulse font-bold">Cargando bandeja...</div>
+          <div className="text-center py-10 text-brand-500 animate-pulse font-bold">Cargando bandeja...</div>
        ) : pendientes.length === 0 ? (
           <div className="bg-[#0c130d]/80 border border-white/5 rounded-2xl p-16 flex flex-col items-center justify-center text-gray-500">
              <Clock size={48} className="mb-4 opacity-20" />
@@ -105,7 +105,7 @@ export default function PedidosPendientes({ sucursalFija }) {
 
                      <button
                         onClick={() => handleConfirm(v.id)}
-                        className="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-emerald-500 hover:to-emerald-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
+                        className="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-brand-500 hover:to-brand-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
                      >
                         Confirmar y Acreditar Pedido
                      </button>
@@ -136,7 +136,7 @@ export default function PedidosPendientes({ sucursalFija }) {
                            <td className="px-4 py-3 text-right">
                               <button
                                  onClick={() => handleConfirm(v.id)}
-                                 className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-emerald-500 hover:to-emerald-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
+                                 className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-brand-500 hover:to-brand-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg transition-all"
                               >
                                  Confirmar Pedido
                               </button>

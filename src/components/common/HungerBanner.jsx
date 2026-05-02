@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { X, Utensils } from 'lucide-react';
 import { menuData } from '../../data/data';
 
@@ -19,7 +19,7 @@ export function HungerBanner({ visible }) {
   if (!visible || dismissed || !recommended) return null;
 
   return (
-    <div className="relative flex items-center justify-between gap-4 bg-gradient-to-r from-[#155E5D] to-emerald-700 backdrop-blur-sm text-white text-sm font-medium px-5 py-3 rounded-2xl shadow-xl mb-8 border border-[#155E5D]/20 animate-[fadeInDown_0.5s_ease-out]">
+    <div className="relative flex items-center justify-between gap-4 bg-gradient-to-r from-[#7C5228] to-brand-700 backdrop-blur-sm text-white text-sm font-medium px-5 py-3 rounded-2xl shadow-xl mb-8 border border-[#7C5228]/20 animate-[fadeInDown_0.5s_ease-out]">
       <div className="flex items-center gap-3">
         <Utensils className="w-5 h-5 flex-shrink-0 opacity-80" />
         <span>

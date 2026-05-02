@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { getProducts } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/Button';
@@ -38,8 +38,8 @@ function OpenStatusBar() {
 
   if (isOpen && !isMonday) {
     return (
-      <div className="flex items-center gap-2 justify-center mb-8 py-2 px-4 rounded-full text-sm font-bold w-fit mx-auto border bg-[#155E5D]/10 border-[#155E5D]/30 text-emerald-400 shadow-sm">
-        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+      <div className="flex items-center gap-2 justify-center mb-8 py-2 px-4 rounded-full text-sm font-bold w-fit mx-auto border bg-[#7C5228]/10 border-[#7C5228]/30 text-brand-400 shadow-sm">
+        <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
         Abierto ahora — ¡Pedí tu sushi!
       </div>
     );
@@ -86,19 +86,19 @@ function ProductCard({ product, onAddToCart, isOpen }) {
             onLoad={() => setImgLoaded(true)}
             className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
-          <span className="absolute bottom-4 right-4 bg-sushi-black/95 backdrop-blur-sm text-emerald-400 font-black text-lg px-4 py-1.5 rounded-full shadow-md border border-white/10">
+          <span className="absolute bottom-4 right-4 bg-sushi-black/95 backdrop-blur-sm text-brand-400 font-black text-lg px-4 py-1.5 rounded-full shadow-md border border-white/10">
             ${product.price.toLocaleString('es-AR')}
           </span>
         </div>
 
         <CardContent className="p-6 flex flex-col flex-1 bg-black/30">
-          <h3 className="text-xl font-serif font-bold tracking-tight mb-2 text-white group-hover:text-emerald-400 transition-colors">
+          <h3 className="text-xl font-serif font-bold tracking-tight mb-2 text-white group-hover:text-brand-400 transition-colors">
             {product.name}
           </h3>
           <p className="text-gray-400 text-sm leading-relaxed flex-1">{product.description}</p>
           <Button
             variant="outline"
-            className="w-full mt-6 flex gap-2 items-center transition-all group-hover:bg-emerald-600 group-hover:border-emerald-600 group-hover:text-white"
+            className="w-full mt-6 flex gap-2 items-center transition-all group-hover:bg-brand-600 group-hover:border-brand-600 group-hover:text-white"
             onClick={() => onAddToCart(product)}
           >
             <Plus className="w-4 h-4" />
@@ -133,7 +133,7 @@ export function Menu() {
           ref={headerRef}
           className={`text-center mb-6 anim-fade-up ${headerVisible ? 'in-view' : ''}`}
         >
-          <span className="text-emerald-400 text-sm tracking-[0.3em] font-bold uppercase">
+          <span className="text-brand-400 text-sm tracking-[0.3em] font-bold uppercase">
             Nuestra Selección
           </span>
           <h1 className="text-4xl md:text-5xl font-serif font-bold mt-3 text-white drop-shadow-sm">Menú Principal</h1>

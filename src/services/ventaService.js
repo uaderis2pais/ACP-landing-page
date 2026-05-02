@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
+import { config } from '../config';
 
 export const registrarVenta = async (cart, total, sucursalActiva, vendedorNombre, estado = 'pendiente') => {
   try {
@@ -41,13 +42,8 @@ export const registrarVenta = async (cart, total, sucursalActiva, vendedorNombre
     
     mensajeWhatsApp += `\n*Total abonado:* $${total}`;
 
-    // Dinamismo en el número de WhatsApp según la sucursal
-    const numerosWhatsApp = {
-      'Concepcion': '5493442668753', // Cambiar por el número real
-      'Colon': '5493442668753'       // Cambiar por el número real
-    };
-
-    const numeroWhatsApp = numerosWhatsApp[sucursalActiva];
+    // Dinamismo en el número de WhatsApp según la sucursal (desde config.js)
+    const numeroWhatsApp = config.whatsapp.sucursales[sucursalActiva];
     
     if (numeroWhatsApp) {
       const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
@@ -63,3 +59,4 @@ export const registrarVenta = async (cart, total, sucursalActiva, vendedorNombre
     return false; // Permite manejar el error en el componente devuelviendo algo falsy
   }
 };
+

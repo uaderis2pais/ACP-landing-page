@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
-import { Instagram, MapPin, Phone, MessageCircle } from 'lucide-react';
+﻿import { Link } from 'react-router-dom';
+import { Instagram, MessageCircle, UtensilsCrossed } from 'lucide-react';
 import { openWhatsApp } from '../../utils/whatsappGuard';
+import { config } from '../../config';
 
 const smoothScrollTo = (targetY, duration = 800) => {
   const startY = window.scrollY;
@@ -34,11 +35,16 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
-            <Link to="/#hero" className="inline-block group mb-4">
-              <img src="/logoinvisible.webp" alt="Agarrame como puedas" className="h-10 w-auto object-contain group-hover:scale-105 transition-transform opacity-70 group-hover:opacity-100" />
+            <Link to="/#hero" className="inline-flex items-center gap-2 group mb-4">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-800 flex items-center justify-center border border-white/10 group-hover:scale-105 transition-transform opacity-70 group-hover:opacity-100">
+                <UtensilsCrossed className="w-3.5 h-3.5 text-white" />
+              </div>
+              <span className="font-serif font-bold text-white/70 group-hover:text-white transition-colors text-base tracking-tight">
+                {config.nombreDelNegocio}
+              </span>
             </Link>
             <p className="text-gray-600 text-sm max-w-sm mt-2">
-              El sushi más fresco de Concepción del Uruguay. Una experiencia gastronómica inigualable.
+              {config.descripcion}
             </p>
           </div>
 
@@ -46,27 +52,27 @@ export function Footer() {
             <a
               href="/#menu"
               onClick={(e) => handleFooterLink(e, 'menu')}
-              className="hover:text-[#155E5D] transition-colors py-3 px-2 min-h-[48px] flex items-center"
+              className="hover:text-[#7C5228] transition-colors py-3 px-2 min-h-[48px] flex items-center"
             >
               Menú
             </a>
             <a
               href="/#contact"
               onClick={(e) => handleFooterLink(e, 'contact')}
-              className="hover:text-[#155E5D] transition-colors py-3 px-2 min-h-[48px] flex items-center"
+              className="hover:text-[#7C5228] transition-colors py-3 px-2 min-h-[48px] flex items-center"
             >
               Ubicación
             </a>
             <div className="flex gap-4">
               <button
-                onClick={() => openWhatsApp('https://wa.me/5491158774154')}
+                onClick={() => openWhatsApp(`https://wa.me/${config.whatsapp.principal}`)}
                 aria-label="Contactar por WhatsApp"
                 className="hover:text-green-500 transition-colors py-3 px-2 min-h-[48px] flex items-center"
               >
                 WhatsApp
               </button>
               <a
-                href="https://instagram.com"
+                href={config.redesSociales.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Seguinos en Instagram"
@@ -80,7 +86,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-white/5 text-center flex flex-col items-center">
           <p className="text-gray-600 text-xs uppercase tracking-widest font-bold">
-            © {new Date().getFullYear()} Agarrame como puedas. Todos los derechos reservados.
+            © {new Date().getFullYear()} {config.nombreDelNegocio}. Todos los derechos reservados.
           </p>
         </div>
       </div>

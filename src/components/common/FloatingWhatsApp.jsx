@@ -1,9 +1,10 @@
 import { openWhatsApp } from '../../utils/whatsappGuard';
+import { config } from '../../config';
 
 export function FloatingWhatsApp() {
   const handleClick = (e) => {
     e.preventDefault();
-    openWhatsApp('https://wa.me/5493442668753');
+    openWhatsApp(`https://wa.me/${config.whatsapp.principal}`);
   };
 
   return (

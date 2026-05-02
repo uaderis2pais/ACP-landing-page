@@ -5,7 +5,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
     try {
-      const savedCart = localStorage.getItem('agarrame-cart');
+      const savedCart = localStorage.getItem('app-cart');
       return savedCart ? JSON.parse(savedCart) : [];
     } catch (error) {
       console.error('Failed to parse cart form localStorage:', error);
@@ -16,7 +16,7 @@ export function CartProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('agarrame-cart', JSON.stringify(cartItems));
+    localStorage.setItem('app-cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product) => {

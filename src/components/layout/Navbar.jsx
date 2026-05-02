@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Menu, X, ShoppingBag, ShieldAlert, ShieldCheck, UtensilsCrossed } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { supabase } from '../../lib/supabaseClient';
+import { config } from '../../config';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -84,8 +85,13 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <a href="/#hero" className="flex items-center group">
-            <img src="/logoinvisible.webp" alt="Agarrame como puedas Logo" className="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
+          <a href="/#hero" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-800 flex items-center justify-center shadow-[0_0_14px_rgba(124,82,40,0.35)] border border-white/10 group-hover:scale-105 transition-transform">
+              <UtensilsCrossed className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-serif font-bold text-white text-lg tracking-tight group-hover:text-brand-400 transition-colors leading-none">
+              {config.nombreDelNegocio}
+            </span>
           </a>
 
           <div className="hidden md:flex items-center space-x-8">
@@ -94,7 +100,7 @@ export function Navbar() {
                 key={link.name}
                 href={link.path}
                 onClick={(e) => handleNavClick(e, link.path)}
-                className="text-sm font-bold tracking-tight transition-colors hover:text-emerald-400 hover:-translate-y-0.5 text-gray-300 inline-block transform duration-200"
+                className="text-sm font-bold tracking-tight transition-colors hover:text-brand-400 hover:-translate-y-0.5 text-gray-300 inline-block transform duration-200"
               >
                 {link.name}
               </a>
@@ -103,11 +109,11 @@ export function Navbar() {
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label="Ver carrito de compras"
-              className="relative min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-emerald-400 transition-all duration-200 hover:-translate-y-1 group"
+              className="relative min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-brand-400 transition-all duration-200 hover:-translate-y-1 group"
             >
               <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
               {getCartCount() > 0 && (
-                <span className="absolute top-0 right-0 bg-[#155E5D] shadow-md text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-in zoom-in">
+                <span className="absolute top-0 right-0 bg-[#7C5228] shadow-md text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-in zoom-in">
                   {getCartCount()}
                 </span>
               )}
@@ -116,7 +122,7 @@ export function Navbar() {
             {/* Login / Admin Button Desktop */}
             <Link
               to={user ? "/admin" : "/login"}
-              className={`flex items-center gap-2 text-[10px] font-black tracking-widest uppercase px-4 py-2 rounded-xl transition-all duration-300 ${user ? 'bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:scale-105 border border-emerald-500/50' : 'border border-white/10 text-gray-400 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-500/10'}`}
+              className={`flex items-center gap-2 text-[10px] font-black tracking-widest uppercase px-4 py-2 rounded-xl transition-all duration-300 ${user ? 'bg-gradient-to-r from-brand-600 to-brand-800 text-white shadow-[0_0_15px_rgba(124,82,40,0.3)] hover:scale-105 border border-brand-500/50' : 'border border-white/10 text-gray-400 hover:text-white hover:border-brand-500/50 hover:bg-brand-500/10'}`}
             >
               {user ? <><ShieldCheck size={14} /> Ir al Panel</> : <><ShieldAlert size={14} /> Ingreso Admin</>}
             </Link>
@@ -126,11 +132,11 @@ export function Navbar() {
             <button
               onClick={() => setIsCartOpen(true)}
               aria-label="Ver carrito"
-              className="relative min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-emerald-400 transition-colors"
+              className="relative min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-brand-400 transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
               {getCartCount() > 0 && (
-                <span className="absolute top-0 right-0 bg-[#155E5D] shadow-md text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                <span className="absolute top-0 right-0 bg-[#7C5228] shadow-md text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                   {getCartCount()}
                 </span>
               )}
@@ -138,7 +144,7 @@ export function Navbar() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
-              className="min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-emerald-400 transition-colors"
+              className="min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-300 hover:text-brand-400 transition-colors"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -167,9 +173,9 @@ export function Navbar() {
           <Link
             to={user ? "/admin" : "/login"}
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-center gap-2 mt-6 px-4 py-4 text-[10px] font-black tracking-widest uppercase rounded-xl transition-all duration-300 ${user ? 'bg-gradient-to-r from-emerald-600 to-emerald-800 text-white border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'border border-white/10 text-gray-400'}`}
+            className={`flex items-center justify-center gap-2 mt-6 px-4 py-4 text-[10px] font-black tracking-widest uppercase rounded-xl transition-all duration-300 ${user ? 'bg-gradient-to-r from-brand-600 to-brand-800 text-white border border-brand-500/50 shadow-[0_0_15px_rgba(124,82,40,0.3)]' : 'border border-white/10 text-gray-400'}`}
           >
-            {user ? <><ShieldCheck size={16} /> Ir al Panel ACP</> : <><ShieldAlert size={16} /> Ingreso Admin</>}
+            {user ? <><ShieldCheck size={16} /> Ir al Panel</> : <><ShieldAlert size={16} /> Ingreso Admin</>}
           </Link>
         </div>
       </div>

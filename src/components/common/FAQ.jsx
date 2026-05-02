@@ -1,12 +1,13 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useInView } from '../../hooks/useInView';
+import { config } from '../../config';
 
 /* ─── FAQ Data — structured for voice search & SGE ──────────────────────── */
 const FAQ_DATA = [
   {
-    q: '¿Hacen envíos a domicilio en Concepción del Uruguay?',
-    a: 'Sí, hacemos delivery a toda la ciudad de Concepción del Uruguay. Coordinás el envío directamente por WhatsApp al momento de hacer tu pedido.',
+    q: `¿Hacen envíos a domicilio en ${config.direccion.ciudad}?`,
+    a: `Sí, hacemos delivery a toda la ciudad de ${config.direccion.ciudad}. Coordinás el envío directamente por WhatsApp al momento de hacer tu pedido.`,
   },
   {
     q: '¿A qué hora abren?',
@@ -29,7 +30,7 @@ const FAQ_DATA = [
     a: 'Sí, contamos con opciones vegetarianas como el Hot Veggie (rebozado con cheddar, palta y Philadelphia), Veggie Perú, Tropical Veggie y el Pink Maki con remolacha, palta y queso.',
   },
   {
-    q: '¿Es el mejor sushi de Concepción del Uruguay?',
+    q: `¿Es el mejor sushi de ${config.direccion.ciudad}?`,
     a: 'Nos esforzamos cada día para que sí lo sea. Usamos ingredientes frescos, pescado de calidad y preparaciones artesanales. Nuestros clientes nos avalan — ¡probá y nos contás!',
   },
 ];
@@ -45,11 +46,11 @@ function FAQItem({ question, answer, index }) {
         aria-expanded={open}
         className="w-full flex justify-between items-center px-6 py-5 text-left hover:bg-white/5 transition-colors group rounded-2xl"
       >
-        <span className="font-bold text-white tracking-tight text-sm md:text-base pr-4 group-hover:text-emerald-400 transition-colors">
+        <span className="font-bold text-white tracking-tight text-sm md:text-base pr-4 group-hover:text-brand-400 transition-colors">
           {question}
         </span>
         <ChevronDown
-          className={`w-5 h-5 text-emerald-400 flex-shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 text-brand-400 flex-shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
         />
       </button>
 
@@ -79,7 +80,7 @@ export function FAQ() {
           ref={headerRef}
           className={`text-center mb-14 anim-fade-up ${headerVisible ? 'in-view' : ''}`}
         >
-          <span className="text-emerald-400 text-sm tracking-[0.3em] font-bold uppercase">
+          <span className="text-brand-400 text-sm tracking-[0.3em] font-bold uppercase">
             Preguntas Frecuentes
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold mt-3 text-white drop-shadow-sm">

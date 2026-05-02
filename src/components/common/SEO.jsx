@@ -1,32 +1,32 @@
 import { useEffect } from 'react';
+import { config } from '../../config';
 
 /* ─────────────────────────────────────────────────────────────────────────
-   SEO.jsx  —  Structured Data + Meta injection for "Agarrame Como Puedas"
-   Optimized for Google SGE, Local Pack and Schema.org entity recognition.
+   SEO.jsx  —  Structured Data + Meta injection — White Label
+   Todos los datos se leen desde src/config.js.
    ───────────────────────────────────────────────────────────────────────── */
 
-// ── 1. Business data (single source of truth — edit here) ──────────────────
+// ── 1. Business data (leído desde config.js — source of truth) ─────────────
 const BUSINESS = {
-  name: 'Agarrame Como Puedas',
-  alternateName: 'Agarrame Sushi',
-  description:
-    'Restaurante de sushi artesanal en Concepción del Uruguay. Rolls frescos, geishas, combos y delivery. La mejor experiencia gastronómica japonesa de la ciudad.',
-  url: 'https://agarramecomopuedas.com.ar',
-  telephone: '+54-11-5877-4154',
+  name:          config.nombreDelNegocio,
+  alternateName: `${config.nombreDelNegocio} Sushi`,
+  description:   config.descripcion,
+  url:           config.url,
+  telephone:     config.telefono,
   servesCuisine: ['Sushi', 'Japanese', 'Asian Fusion'],
-  priceRange: '$$',
-  currenciesAccepted: 'ARS',
-  paymentAccepted: 'Cash, Bank Transfer',
+  priceRange:    config.seo.priceRange,
+  currenciesAccepted: config.seo.currenciesAccepted,
+  paymentAccepted:    config.seo.paymentAccepted,
   address: {
-    streetAddress: '3 de Febrero 71',
-    addressLocality: 'Concepción del Uruguay',
-    addressRegion: 'Entre Ríos',
-    postalCode: '3260',
-    addressCountry: 'AR',
+    streetAddress:   config.direccion.calle,
+    addressLocality: config.direccion.ciudad,
+    addressRegion:   config.direccion.provincia,
+    postalCode:      config.direccion.codigoPostal,
+    addressCountry:  config.direccion.pais,
   },
   geo: {
-    latitude: -32.4822,
-    longitude: -58.2323,
+    latitude:  config.geo.lat,
+    longitude: config.geo.lng,
   },
   openingHours: [
     // Martes a Jueves
@@ -36,9 +36,10 @@ const BUSINESS = {
     // Lunes: cerrado (omitido intencionalmente — ausencia = cerrado)
   ],
   sameAs: [
-    'https://www.instagram.com/agarramecomopuedas',
+    config.redesSociales.instagram.url,
+    config.redesSociales.tiktok.url,
   ],
-  image: 'https://agarramecomopuedas.com.ar/logoinvisible.png',
+  image: `${config.url}/favicon.svg`,
 };
 
 // ── 2. Menu highlights (add/remove as needed) ──────────────────────────────
@@ -108,7 +109,7 @@ function buildJsonLd() {
           '@type': 'OrderAction',
           target: {
             '@type': 'EntryPoint',
-            urlTemplate: `https://wa.me/5491158774154`,
+            urlTemplate: `https://wa.me/${config.telefono}`,
             actionPlatform: [
               'https://schema.org/DesktopWebPlatform',
               'https://schema.org/MobileWebPlatform',
@@ -159,15 +160,13 @@ function buildJsonLd() {
   };
 }
 
-// ── 4. Meta tags builder ───────────────────────────────────────────────────
+// ── 4. Meta tags builder ────────────────────────────────────────────────
 const META = {
-  title: 'Agarrame Como Puedas | Sushi en Concepción del Uruguay',
-  description:
-    'El mejor sushi de Concepción del Uruguay. Rolls artesanales, geishas, combos y delivery. Pedí por WhatsApp. Abrimos Mar–Dom desde las 20:00.',
-  ogImage: 'https://agarramecomopuedas.com.ar/logoinvisible.png',
-  canonical: 'https://agarramecomopuedas.com.ar',
-  keywords:
-    'sushi Concepción del Uruguay, sushi Entre Ríos, delivery sushi CdU, rolls artesanales, sushi cerca de mí',
+  title:       `${config.nombreDelNegocio} | ${config.eslogan}`,
+  description: config.descripcion,
+  ogImage:     `${config.url}/favicon.svg`,
+  canonical:   config.url,
+  keywords:    config.seo.keywords,
 };
 
 // ── 5. Component ───────────────────────────────────────────────────────────
@@ -220,8 +219,8 @@ export function SEO() {
     setMeta('name', 'twitter:image', META.ogImage);
 
     // Geo meta (local SEO boost)
-    setMeta('name', 'geo.region', 'AR-E');
-    setMeta('name', 'geo.placename', 'Concepción del Uruguay');
+    setMeta('name', 'geo.region', `${BUSINESS.address.addressCountry}-${BUSINESS.address.addressRegion.substring(0, 1)}`);
+    setMeta('name', 'geo.placename', BUSINESS.address.addressLocality);
     setMeta('name', 'geo.position', `${BUSINESS.geo.latitude};${BUSINESS.geo.longitude}`);
     setMeta('name', 'ICBM', `${BUSINESS.geo.latitude}, ${BUSINESS.geo.longitude}`);
 

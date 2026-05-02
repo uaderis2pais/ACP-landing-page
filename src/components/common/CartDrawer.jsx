@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useCart } from '../../context/CartContext';
 import { X, ShoppingBag, Plus, Minus, Trash2, ShieldAlert, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -82,7 +82,7 @@ export function CartDrawer() {
       <div className={`fixed inset-y-0 right-0 w-full md:w-96 bg-sushi-darkGray border-l border-white/10 shadow-2xl transform transition-transform duration-300 z-[60] flex flex-col ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="p-6 border-b border-white/10 flex justify-between items-center bg-sushi-black">
           <h3 className="text-xl font-serif font-bold text-white tracking-tight flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-emerald-400" /> Tu Pedido
+            <ShoppingBag className="w-5 h-5 text-brand-400" /> Tu Pedido
           </h3>
           <button
             onClick={() => setIsCartOpen(false)}
@@ -113,7 +113,7 @@ export function CartDrawer() {
               <p className="text-lg">Tu carrito está vacío</p>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="mt-4 text-emerald-400 hover:text-emerald-300 text-sm border-b border-transparent hover:border-emerald-400 transition-all font-bold tracking-tight"
+                className="mt-4 text-brand-400 hover:text-brand-300 text-sm border-b border-transparent hover:border-brand-400 transition-all font-bold tracking-tight"
               >
                 Volver al menú
               </button>
@@ -125,7 +125,7 @@ export function CartDrawer() {
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
                     <h4 className="font-bold text-white text-sm leading-tight pr-6">{item.name}</h4>
-                    <span className="text-emerald-400 bg-emerald-400/20 px-2 py-0.5 rounded-full font-black text-xs inline-block mt-2">
+                    <span className="text-brand-400 bg-brand-400/20 px-2 py-0.5 rounded-full font-black text-xs inline-block mt-2">
                       ${item.price.toLocaleString('es-AR')}
                     </span>
                   </div>
@@ -190,25 +190,25 @@ export function CartDrawer() {
       {/* MODAL DE DOBLE PASO WEB */}
       {showWhatsAppModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="bg-[#0c130d] border border-emerald-500/30 rounded-2xl p-8 max-w-sm w-full shadow-[0_20px_50px_rgba(16,185,129,0.2)] animate-in zoom-in-95 duration-300 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500 opacity-10 blur-[50px] pointer-events-none"></div>
+          <div className="bg-[#0c130d] border border-brand-500/30 rounded-2xl p-8 max-w-sm w-full shadow-[0_20px_50px_rgba(124,82,40,0.2)] animate-in zoom-in-95 duration-300 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500 opacity-10 blur-[50px] pointer-events-none"></div>
 
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
-                <MessageCircle size={32} className="text-emerald-400" />
+              <div className="w-16 h-16 rounded-full bg-brand-500/10 flex items-center justify-center border border-brand-500/20">
+                <MessageCircle size={32} className="text-brand-400" />
               </div>
             </div>
 
-            <h3 className="text-xl font-black text-white mb-3 text-center uppercase tracking-widest drop-shadow-[0_0_5px_rgba(16,185,129,0.5)]">¡Tu pedido está casi listo!</h3>
+            <h3 className="text-xl font-black text-white mb-3 text-center uppercase tracking-widest drop-shadow-[0_0_5px_rgba(124,82,40,0.5)]">¡Tu pedido está casi listo!</h3>
             <p className="text-gray-400 text-center text-sm mb-8 leading-relaxed">
-              Para que empecemos a prepararlo, <strong className="text-emerald-400 font-bold block mt-1">confirmá el envío por WhatsApp</strong>.
+              Para que empecemos a prepararlo, <strong className="text-brand-400 font-bold block mt-1">confirmá el envío por WhatsApp</strong>.
             </p>
 
             <div className="flex flex-col gap-3 relative z-10">
               <button
                 onClick={ejecutarVentaPublica}
                 disabled={isRedirecting}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-black tracking-widest text-sm shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 hover:from-brand-400 hover:to-brand-600 text-white font-black tracking-widest text-sm shadow-[0_0_15px_rgba(124,82,40,0.4)] transition-all flex items-center justify-center gap-2"
               >
                 {isRedirecting ? 'CARGANDO...' : 'CONFIRMAR Y ENVIAR MENSAJE'}
               </button>

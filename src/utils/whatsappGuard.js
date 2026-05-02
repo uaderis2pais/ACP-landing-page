@@ -10,6 +10,8 @@
  *     any WA link can be opened.
  */
 
+import { config } from '../config';
+
 // ── Honeypot state (module-level, shared across all components) ─────────────
 let _honeypotValue = '';
 const _pageLoadTime = Date.now();
@@ -47,6 +49,7 @@ export function openWhatsApp(url) {
 /** Convenience builder — encodes the message and calls openWhatsApp */
 export function openWhatsAppWithMessage(message) {
   return openWhatsApp(
-    `https://wa.me/5493442668753?text=${encodeURIComponent(message)}`
+    `https://wa.me/${config.whatsapp.principal}?text=${encodeURIComponent(message)}`
   );
 }
+

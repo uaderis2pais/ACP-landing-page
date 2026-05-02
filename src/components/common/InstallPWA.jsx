@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Download, X } from 'lucide-react';
+﻿import { useState, useEffect } from 'react';
+import { Download, X, UtensilsCrossed } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { config } from '../../config';
 
 export function InstallPWA() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -57,12 +58,12 @@ export function InstallPWA() {
         </div>
       </button>
 
-      <div className="flex items-center gap-4 w-full px-2 pt-1">
-        <div className="w-14 h-14 flex-shrink-0 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 p-2 shadow-inner">
-          <img src="/logoinvisible.webp" alt="App Icon" className="w-full h-full object-contain" />
-        </div>
-        <div className="flex-1 pr-6">
-          <p className="font-bold text-white leading-tight mb-1 text-lg">Agarrame App</p>
+        <div className="flex items-center gap-4 w-full px-2 pt-1">
+          <div className="w-14 h-14 flex-shrink-0 bg-gradient-to-br from-brand-600 to-brand-900 rounded-2xl flex items-center justify-center border border-white/10 p-2 shadow-inner">
+            <UtensilsCrossed className="w-7 h-7 text-white" />
+          </div>
+          <div className="flex-1 pr-6">
+            <p className="font-bold text-white leading-tight mb-1 text-lg">{config.nombreDelNegocio}</p>
           <p className="text-xs text-gray-400 leading-snug">Instalá la web-app para pedir más rápido, revisar el menú offline y sin ocupar espacio.</p>
         </div>
       </div>
